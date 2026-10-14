@@ -137,7 +137,7 @@ export function transformSvg(svg: string, o: TransformOptions) {
     // 4. eye size
     s = scaleEyes(s, o.eyes ?? 1);
     // 5. clean helper attributes
-    return s.replace(/ data-(?:ow|bs|jp)="[^"]*"/g, "").trim();
+    return s.replace(/ data-(?:ow|bs|jp|fit)="[^"]*"/g, "").trim();
 }
 // ---------- code export ----------
 function pascal(name: string) {
