@@ -31,6 +31,8 @@ export interface Gallery {
   hasColor: boolean;
   /** Swatch index selected on open (default: -1, mixed). */
   defaultColor?: number;
+  /** Eyes slider value on open (default: 1). */
+  defaultEyes?: number;
   colors: { v: number; hex: string | null; title: string }[];
   inks: { hex: string; title: string }[];
   sections: Section[];

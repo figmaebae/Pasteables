@@ -9,7 +9,7 @@ fs.writeFileSync("data/gallery-mushroom.json", JSON.stringify({
   hasColor: false, colors: [], inks: emo.inks, sections,
 }));
 const hero = JSON.parse(fs.readFileSync("data/hero.json", "utf8")).filter((h) => h.id !== "mushroom");
-hero.push({ id: "mushroom", color: "#D9504E", name: "Mushroom", desc: "A tiny spotted mushroom with a face for every mood.", tag: "#mushroom", count: `#${all.length}`, artStyle: "--d:0.30s;--w:min(96%,27vh);--x:0%;--drop:6%", svg: plain(all[0].svg) });
+hero.push({ id: "mushroom", color: "#D9504E", name: "Mushroom", desc: "A tiny spotted mushroom with a face for every mood.", tag: "#mushroom", count: `#${all.length}`, artStyle: "--d:0.30s;--w:min(88%,27vh);--x:0%;--drop:6%", svg: plain(all[0].svg) });
 fs.writeFileSync("data/hero.json", JSON.stringify(hero));
 // contact sheet for eyeballing
 const dir = (process.env.TMPDIR || "/tmp") + "/sheet";

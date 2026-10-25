@@ -93,7 +93,7 @@ export default function Shelf({ hero }: { hero: HeroColumn[] }) {
   return (
     <>
       <main className="hero">
-        <h1 className="srOnly">Vector Shelf: little vectors, one click away</h1>
+        <h1 className="srOnly">Pasteables: little vectors, one click away</h1>
         {hero.map((c) => (
           <a
             key={c.id}
@@ -107,10 +107,6 @@ export default function Shelf({ hero }: { hero: HeroColumn[] }) {
             <h2 className="name" style={{ "--len": c.name.length } as CSSProperties}>{c.name}</h2>
             <div className="info">
               <p className="desc">{c.desc}</p>
-              <p className="tags">
-                <span>{c.tag}</span>
-                <span>{c.count}</span>
-              </p>
             </div>
             <div className="art" aria-hidden="true" style={parseStyle(c.artStyle)} dangerouslySetInnerHTML={{ __html: c.svg }} />
           </a>

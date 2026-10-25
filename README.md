@@ -1,6 +1,6 @@
-# Vector Shelf
+# Pasteables
 
-A Next.js (App Router) port of the "Vector Shelf" artifact: five full-height colour stripes (Mascot, Emote, Ghost, Cloud, Mushroom) that open galleries of copy-ready SVG characters, with live Color / Style / Stroke / Eyes / Ink controls and copy-as SVG, React or Flutter.
+A Next.js (App Router) web app (originally the "Vector Shelf" artifact): five full-height colour stripes (Mascot, Emote, Ghost, Cloud, Mushroom) that open galleries of copy-ready SVG characters, with live Color / Style / Stroke / Eyes / Ink controls and copy-as SVG, React or Flutter.
 
 ## Run
 

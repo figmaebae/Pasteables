@@ -8,7 +8,7 @@ const brico = Bricolage_Grotesque({ subsets: ["latin"], weight: "700", variable:
 const dm = DM_Sans({ subsets: ["latin"], weight: ["500", "700"], variable: "--f-dm", display: "swap" });
 
 export const metadata: Metadata = {
-  title: "Vector Shelf",
+  title: "Pasteables",
   description: "Little vectors, one click away. Mascots, emoticons, ghosts and clouds you can copy as SVG, React or Flutter.",
 };
 

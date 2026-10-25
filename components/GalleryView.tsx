@@ -191,7 +191,7 @@ export default function GalleryView({
   onClose: () => void;
   onCopied: (msg: string) => void;
 }) {
-  const base: Studio = { ...DEFAULTS, color: gallery.defaultColor ?? -1 };
+  const base: Studio = { ...DEFAULTS, color: gallery.defaultColor ?? -1, eyes: gallery.defaultEyes ?? 1 };
   const [st, setSt] = useState<Studio>(base);
   const ref = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
@@ -205,7 +205,7 @@ export default function GalleryView({
     if (focusTitle) titleRef.current?.focus({ preventScroll: true });
   }, [hidden, focusTitle]);
 
-  const dirty = st.color !== base.color || st.style !== "filled" || st.stroke !== DEFAULTS.stroke || st.ink !== DEFAULT_INK || st.eyes !== 1;
+  const dirty = st.color !== base.color || st.style !== "filled" || st.stroke !== DEFAULTS.stroke || st.ink !== DEFAULT_INK || st.eyes !== base.eyes;
 
   return (
     <div
