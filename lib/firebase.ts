@@ -1,5 +1,6 @@
 import { getApp, getApps, initializeApp } from "firebase/app";
 import { getAnalytics, isSupported } from "firebase/analytics";
+import { getAuth } from "firebase/auth";
 
 // Web config identifies the project; it is not a secret.
 const firebaseConfig = {
@@ -12,9 +13,17 @@ const firebaseConfig = {
   measurementId: "G-JEGJDXNX05",
 };
 
+/** Browser only: one shared Firebase app. */
+export function getFirebaseApp() {
+  return getApps().length ? getApp() : initializeApp(firebaseConfig);
+}
+
+export function getFirebaseAuth() {
+  return getAuth(getFirebaseApp());
+}
+
 /** Browser only. Analytics needs window, so it is skipped on the server and in unsupported browsers. */
 export async function initAnalytics() {
   if (typeof window === "undefined" || !(await isSupported())) return null;
-  const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
-  return getAnalytics(app);
+  return getAnalytics(getFirebaseApp());
 }

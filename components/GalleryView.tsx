@@ -1,5 +1,6 @@
 "use client";
 
+import { useAuth } from "./AuthProvider";
 import { memo, useEffect, useId, useRef, useState } from "react";
 import { DEFAULT_INK, FORMAT_LABEL, formatOutput, transformSvg } from "@/lib/transform";
 import type { Format } from "@/lib/transform";
@@ -121,6 +122,7 @@ const SectionView = memo(function SectionView({
   const { palette, base } = section;
   const outlined = st.style === "outlined";
   const [copiedIdx, setCopiedIdx] = useState<number | null>(null);
+  const { user, loading, requestSignIn } = useAuth();
 
   const render = (t: Tile, i: number) => {
     const hex =
@@ -129,15 +131,27 @@ const SectionView = memo(function SectionView({
     return transformSvg(src, { from: base || undefined, to: hex, outlined, stroke: st.stroke, ink: st.ink, eyes: st.eyes });
   };
 
-  const onClick = async (t: Tile, i: number) => {
+  const copyNow = async (t: Tile, i: number, quiet = false) => {
     const ok = await copyText(formatOutput(t.name, render(t, i), st.format));
     if (ok) {
       setCopiedIdx(i);
       onCopied(`${t.name} copied as ${FORMAT_LABEL[st.format]}`);
       setTimeout(() => setCopiedIdx((c) => (c === i ? null : c)), 1800);
-    } else {
+    } else if (!quiet) {
       onCopied("Copy was blocked by this browser. Try opening the page in a full tab.");
     }
+    return ok;
+  };
+
+  const onClick = async (t: Tile, i: number) => {
+    // Browsing is open to everyone; copying needs a signed-in account.
+    if (loading) return;
+    if (!user) {
+      // After sign-in we try to finish this same copy; the provider explains if the browser refuses.
+      requestSignIn("copy", () => copyNow(t, i, true));
+      return;
+    }
+    await copyNow(t, i);
   };
 
   return (
@@ -182,13 +196,11 @@ export default function GalleryView({
   gallery,
   hidden,
   focusTitle,
-  onClose,
   onCopied,
 }: {
   gallery: Gallery;
   hidden: boolean;
   focusTitle: boolean;
-  onClose: () => void;
   onCopied: (msg: string) => void;
 }) {
   const base: Studio = { ...DEFAULTS, color: gallery.defaultColor ?? -1, eyes: gallery.defaultEyes ?? 1 };
@@ -218,9 +230,6 @@ export default function GalleryView({
       hidden={hidden}
     >
       <div className="gin">
-        <button type="button" className="gback" onClick={onClose}>
-          &larr; Back to home
-        </button>
         <div className="gh">
           <h2 id={`gt-${gallery.id}`} tabIndex={-1} ref={titleRef}>
             {gallery.title}

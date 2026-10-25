@@ -1,20 +1,10 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import type { CSSProperties } from "react";
 import GalleryView from "./GalleryView";
+import Landing from "./Landing";
 import { GALLERY_LOADERS } from "@/lib/galleries";
 import type { Gallery, HeroColumn } from "@/lib/types";
-
-/** Turn "--c:#fff;--d:0s" into a React style object (custom properties included). */
-function parseStyle(css: string): CSSProperties {
-  const out: Record<string, string> = {};
-  for (const decl of css.split(";")) {
-    const i = decl.indexOf(":");
-    if (i > 0) out[decl.slice(0, i).trim()] = decl.slice(i + 1).trim();
-  }
-  return out as CSSProperties;
-}
 
 function setHash(h: string) {
   try {
@@ -24,12 +14,13 @@ function setHash(h: string) {
 
 export default function Shelf({ hero }: { hero: HeroColumn[] }) {
   const [active, setActive] = useState<string | null>(null);
-  const [popping, setPopping] = useState<string | null>(null);
   const [loaded, setLoaded] = useState<Record<string, Gallery>>({});
   const [toast, setToast] = useState<{ text: string; show: boolean }>({ text: "", show: false });
   const lastTrigger = useRef<HTMLElement | null>(null);
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const moveFocus = useRef(false);
+  // True when opening a pack added a history entry, so closing can simply go back to the homepage.
+  const pushed = useRef(false);
 
   const say = useCallback((text: string) => {
     setToast({ text, show: true });
@@ -37,19 +28,34 @@ export default function Shelf({ hero }: { hero: HeroColumn[] }) {
     toastTimer.current = setTimeout(() => setToast((t) => ({ ...t, show: false })), 1800);
   }, []);
 
-  const open = useCallback((id: string, move: boolean) => {
+  const open = useCallback((id: string, move: boolean, push = false) => {
     if (!GALLERY_LOADERS[id]) return;
     moveFocus.current = move;
     GALLERY_LOADERS[id]().then((g) => {
       setLoaded((prev) => (prev[id] ? prev : { ...prev, [id]: g }));
       setActive(id);
-      setHash("#" + id);
+      if (push && location.hash !== "#" + id) {
+        // A real history entry: the browser's Back button returns to the homepage instead of leaving the site.
+        try {
+          history.pushState(null, "", "#" + id);
+          pushed.current = true;
+        } catch {
+          setHash("#" + id);
+        }
+      } else {
+        setHash("#" + id);
+      }
     });
   }, []);
 
   const close = useCallback(() => {
     setActive(null);
-    setHash("");
+    if (pushed.current) {
+      pushed.current = false;
+      history.back();
+    } else {
+      setHash("");
+    }
     lastTrigger.current?.focus({ preventScroll: true });
   }, []);
 
@@ -58,12 +64,16 @@ export default function Shelf({ hero }: { hero: HeroColumn[] }) {
     const fromHash = () => {
       const h = location.hash.slice(1);
       if (h) open(h, false);
-      else setActive(null);
+      else {
+        pushed.current = false;
+        setActive(null);
+      }
     };
     fromHash();
     window.addEventListener("hashchange", fromHash);
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") close();
+      // Escape inside the sign-in dialog only closes the dialog, not the pack behind it.
+      if (e.key === "Escape" && !document.querySelector("dialog[open]")) close();
     };
     document.addEventListener("keydown", onKey);
     return () => {
@@ -72,46 +82,32 @@ export default function Shelf({ hero }: { hero: HeroColumn[] }) {
     };
   }, [open, close]);
 
+  // The page behind an open gallery shouldn't scroll.
+  useEffect(() => {
+    document.documentElement.style.overflow = active ? "hidden" : "";
+    return () => {
+      document.documentElement.style.overflow = "";
+    };
+  }, [active]);
+
   // Warm the chunk on hover so the click feels instant.
   const prefetch = (id: string) => void GALLERY_LOADERS[id]?.();
 
-  const onColumnClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+  const onPackClick = (id: string, e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
-    if (popping) return;
     lastTrigger.current = e.currentTarget;
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    setPopping(id);
-    setTimeout(
-      () => {
-        open(id, true);
-        setPopping(null);
-      },
-      reduce ? 0 : 240,
-    );
+    open(id, true, true);
+  };
+
+  // The logo goes home: out of a pack if one is open, otherwise back to the top of the page.
+  const onHome = () => {
+    if (active) close();
+    else window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
     <>
-      <main className="hero">
-        <h1 className="srOnly">Pasteables: little vectors, one click away</h1>
-        {hero.map((c) => (
-          <a
-            key={c.id}
-            className={`col${popping === c.id ? " pop" : ""}`}
-            href={`#${c.id}`}
-            style={{ "--c": c.color } as CSSProperties}
-            onClick={(e) => onColumnClick(e, c.id)}
-            onMouseEnter={() => prefetch(c.id)}
-            onFocus={() => prefetch(c.id)}
-          >
-            <h2 className="name" style={{ "--len": c.name.length } as CSSProperties}>{c.name}</h2>
-            <div className="info">
-              <p className="desc">{c.desc}</p>
-            </div>
-            <div className="art" aria-hidden="true" style={parseStyle(c.artStyle)} dangerouslySetInnerHTML={{ __html: c.svg }} />
-          </a>
-        ))}
-      </main>
+      <Landing hero={hero} onOpenPack={onPackClick} onWarm={prefetch} onHome={onHome} />
 
       {Object.values(loaded).map((g) => (
         <GalleryView
@@ -119,7 +115,6 @@ export default function Shelf({ hero }: { hero: HeroColumn[] }) {
           gallery={g}
           hidden={active !== g.id}
           focusTitle={moveFocus.current}
-          onClose={close}
           onCopied={say}
         />
       ))}

@@ -1,6 +1,6 @@
 # Pasteables
 
-A Next.js (App Router) web app (originally the "Vector Shelf" artifact): five full-height colour stripes (Mascot, Emote, Ghost, Cloud, Mushroom) that open galleries of copy-ready SVG characters, with live Color / Style / Stroke / Eyes / Ink controls and copy-as SVG, React or Flutter.
+A Next.js (App Router) web app (originally the "Vector Shelf" artifact): a one-page sticker-shop style homepage (hero collage, bento pack cards, manifesto) whose pack cards open galleries of copy-ready SVG characters. Browsing is open; copying needs a Google sign-in (Firebase Authentication). `node scripts/build-landing.mjs` rebuilds the small sticker set used on the homepage collage, with live Color / Style / Stroke / Eyes / Ink controls and copy-as SVG, React or Flutter.
 
 ## Run
 
