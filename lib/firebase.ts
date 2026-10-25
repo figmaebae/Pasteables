@@ -3,13 +3,13 @@ import { getAnalytics, isSupported } from "firebase/analytics";
 
 // Web config identifies the project; it is not a secret.
 const firebaseConfig = {
-  apiKey: "AIzaSyCvptc_WJpf0hDoCgZdSJ7xCMINEIMUtl4",
-  authDomain: "figmaebae-8c3e0.firebaseapp.com",
-  projectId: "figmaebae-8c3e0",
-  storageBucket: "figmaebae-8c3e0.firebasestorage.app",
-  messagingSenderId: "149758722640",
-  appId: "1:149758722640:web:af51e1bfd68ce835aa0755",
-  measurementId: "G-07N4JPY00M",
+  apiKey: "AIzaSyACi128GMS2tKoQ-O1SfmMMurpf8-suZwA",
+  authDomain: "pasteables-98fbf.firebaseapp.com",
+  projectId: "pasteables-98fbf",
+  storageBucket: "pasteables-98fbf.firebasestorage.app",
+  messagingSenderId: "1027017942105",
+  appId: "1:1027017942105:web:d2fbc398e088189f673d48",
+  measurementId: "G-JEGJDXNX05",
 };
 
 /** Browser only. Analytics needs window, so it is skipped on the server and in unsupported browsers. */
