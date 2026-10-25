@@ -54,7 +54,7 @@ a.col:focus-visible { outline: 4px solid #fff; outline-offset: -8px; }
   transform: rotate(180deg);
   font-family: var(--f-mont), "Arial Black", sans-serif;
   font-weight: 800;
-  font-size: min(6.6vw, 10.5vh);
+  font-size: min(6.6vw, 10.5vh, calc(63vh / var(--len, 6))); /* long names shrink so the text clears the art */
   line-height: .9;
   letter-spacing: .01em;
   text-transform: uppercase;

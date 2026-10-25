@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Bricolage_Grotesque, DM_Sans, Montserrat } from "next/font/google";
+import Analytics from "@/components/Analytics";
 import "./globals.css";
 
 const mont = Montserrat({ subsets: ["latin"], weight: "800", variable: "--f-mont", display: "swap" });
@@ -21,7 +22,10 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${mont.variable} ${brico.variable} ${dm.variable}`}>
-      <body>{children}</body>
+      <body>
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }

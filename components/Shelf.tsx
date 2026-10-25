@@ -104,7 +104,7 @@ export default function Shelf({ hero }: { hero: HeroColumn[] }) {
             onMouseEnter={() => prefetch(c.id)}
             onFocus={() => prefetch(c.id)}
           >
-            <h2 className="name">{c.name}</h2>
+            <h2 className="name" style={{ "--len": c.name.length } as CSSProperties}>{c.name}</h2>
             <div className="info">
               <p className="desc">{c.desc}</p>
               <p className="tags">
