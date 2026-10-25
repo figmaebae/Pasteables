@@ -14,7 +14,7 @@ interface Studio {
   format: Format;
 }
 
-const DEFAULTS: Studio = { color: -1, style: "filled", stroke: 1, ink: DEFAULT_INK, eyes: 1, format: "svg" };
+const DEFAULTS: Studio = { color: -1, style: "filled", stroke: 0.5, ink: DEFAULT_INK, eyes: 1, format: "svg" };
 
 function Seg<T extends string>({
   label,
@@ -157,8 +157,20 @@ const SectionView = memo(function SectionView({
             <div className="gstage" dangerouslySetInnerHTML={{ __html: render(t, i) }} />
             <div className="gcap">
               <span>{t.name}</span>
-              <span className="ghint">{copiedIdx === i ? "Copied" : "Click to copy"}</span>
             </div>
+            <span className="gover" aria-hidden="true">
+              {copiedIdx === i ? (
+                <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M5 12.5l4.5 4.5L19 7.5" />
+                </svg>
+              ) : (
+                <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="9" y="9" width="11" height="11" rx="2.5" />
+                  <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5" />
+                </svg>
+              )}
+              <span>{copiedIdx === i ? "Copied" : "Copy"}</span>
+            </span>
           </button>
         ))}
       </div>
@@ -179,7 +191,8 @@ export default function GalleryView({
   onClose: () => void;
   onCopied: (msg: string) => void;
 }) {
-  const [st, setSt] = useState<Studio>(DEFAULTS);
+  const base: Studio = { ...DEFAULTS, color: gallery.defaultColor ?? -1 };
+  const [st, setSt] = useState<Studio>(base);
   const ref = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const strokeId = useId();
@@ -192,7 +205,7 @@ export default function GalleryView({
     if (focusTitle) titleRef.current?.focus({ preventScroll: true });
   }, [hidden, focusTitle]);
 
-  const dirty = st.color !== -1 || st.style !== "filled" || st.stroke !== 1 || st.ink !== DEFAULT_INK || st.eyes !== 1;
+  const dirty = st.color !== base.color || st.style !== "filled" || st.stroke !== DEFAULTS.stroke || st.ink !== DEFAULT_INK || st.eyes !== 1;
 
   return (
     <div
@@ -282,7 +295,7 @@ export default function GalleryView({
             ]}
             onChange={(format) => patch({ format })}
           />
-          <button type="button" className="reset" hidden={!dirty} onClick={() => setSt((s) => ({ ...DEFAULTS, format: s.format }))}>
+          <button type="button" className="reset" hidden={!dirty} onClick={() => setSt((s) => ({ ...base, format: s.format }))}>
             Reset
           </button>
         </div>

@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="105 100 800 800" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <defs>
+    <path id="cap" d="M135 505C120 380 220 200 380 150C450 128 560 118 650 150C770 195 880 330 886 450C888 500 850 535 790 545Q700 468 500 455Q330 468 235 548C180 545 145 530 135 505Z"/>
+    <path id="body" d="M259 400L255 480C240 560 232 640 238 720C242 780 270 810 320 825C400 846 600 846 690 825C740 812 790 780 793 720C798 640 790 560 765 480L761 400Z"/>
+    <path id="handL" d="M222 735C205 750 205 790 235 805C265 818 305 805 318 780C325 762 300 748 280 752C262 755 250 745 245 730C240 718 228 722 222 735Z"/>
+    <path id="footL" d="M385 830C378 868 392 888 420 888C448 888 458 868 452 830Z"/>
+    <clipPath id="clipCap"><use href="#cap"/></clipPath>
+    <clipPath id="clipBody"><use href="#body"/></clipPath>
+    <linearGradient id="band" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#B8403F"/><stop offset="1" stop-color="#8A3234"/></linearGradient>
+    <linearGradient id="capBase" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E9524F"/><stop offset="1" stop-color="#D84A4A"/></linearGradient>
+  </defs>
+
+  <!-- tiny rounded feet -->
+  <g fill="#E9DABB" stroke="#20040F" stroke-width="12"><use href="#footL"/><use href="#footL" transform="translate(1000 0) scale(-1 1)"/></g>
+
+  <!-- plush body -->
+  <use href="#body" fill="#F1E5CB"/>
+  <g clip-path="url(#clipBody)">
+    <rect x="200" y="440" width="640" height="90" fill="#C9BBA3"/>
+    <path d="M200 780Q500 870 840 780V880H200Z" fill="#E4D4B5" opacity=".7"/>
+    <path d="M310 806Q500 834 690 806" stroke="#FFF9EC" stroke-width="9" opacity=".95"/>
+  </g>
+  <use href="#body" stroke="#20040F" stroke-width="12"/>
+
+  <!-- mitten hands -->
+  <g fill="#EBDDBF" stroke="#20040F" stroke-width="12"><use href="#handL"/><use href="#handL" transform="translate(1030 0) scale(-1 1)"/></g>
+
+  <!-- face -->
+  <ellipse cx="302" cy="602" rx="31" ry="17" fill="#EE8383"/><ellipse cx="708" cy="600" rx="31" ry="17" fill="#EE8383"/>
+  <ellipse cx="355" cy="575" rx="43" ry="68" fill="#1E0612"/><ellipse cx="655" cy="570" rx="43" ry="68" fill="#1E0612"/>
+  <circle cx="358" cy="550" r="12.5" fill="#fff"/><circle cx="648" cy="543" r="12.5" fill="#fff"/>
+  <path d="M455 570Q505 612 556 570" stroke="#1E0612" stroke-width="9"/>
+
+  <!-- glossy cap -->
+  <use href="#cap" fill="url(#capBase)"/>
+  <g clip-path="url(#clipCap)">
+    <use href="#cap" stroke="#FF7A76" stroke-width="46" opacity=".9"/>
+    <path d="M100 505Q300 440 500 420Q720 415 920 480V620H100Z" fill="url(#band)" opacity=".92"/>
+    <g fill="#fff"><ellipse cx="493" cy="185" rx="50" ry="42"/><ellipse cx="375" cy="278" rx="53" ry="47"/><ellipse cx="770" cy="310" rx="60" ry="62"/><circle cx="603" cy="240" r="12"/><circle cx="662" cy="355" r="10"/><ellipse cx="192" cy="404" rx="21" ry="14" transform="rotate(-30 192 404)"/></g>
+  </g>
+  <use href="#cap" stroke="#20040F" stroke-width="12"/>
+</svg>

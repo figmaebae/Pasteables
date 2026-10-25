@@ -6,7 +6,7 @@ html,body{margin:0;background:#2B2430}
   inset: 0;
   z-index: 1;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   overflow: hidden;
   background: #2B2430;
   font-family: var(--font-body, var(--f-dm), system-ui, sans-serif);
@@ -110,13 +110,14 @@ a.col:active .art svg, .col.pop .art svg { transform: scale(1.14) translateY(-3%
 .gsec h3{margin:0;font-family:var(--f-brico), var(--f-mont), sans-serif;font-size:1.2rem}
 .gshelf{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,150px),1fr));gap:14px}
 .gshelf.one{grid-template-columns:minmax(0,340px)}
-.gtile{all:unset;box-sizing:border-box;cursor:pointer;display:flex;flex-direction:column;gap:6px;padding:8px;background:#fff;border:1px solid #EBDDD0;border-radius:20px;min-width:0;transition:border-color .15s,transform .15s}
+.gtile{all:unset;box-sizing:border-box;cursor:pointer;position:relative;overflow:hidden;display:flex;flex-direction:column;gap:6px;padding:8px;background:#fff;border:1px solid #EBDDD0;border-radius:20px;min-width:0;transition:border-color .15s,transform .15s}
 .gtile:hover{border-color:#E8683A;transform:translateY(-2px)}
 .gstage{background:#FFFDF9;border-radius:12px;padding:8px;display:grid;place-items:center}
 .gstage svg{width:100%;height:auto;max-height:190px;display:block}
 .gcap{display:flex;flex-direction:column;align-items:center;font-size:.95rem;font-weight:600;font-family:var(--f-brico), var(--f-mont), sans-serif}
-.ghint{font-family:ui-monospace,monospace;font-size:.62rem;letter-spacing:.04em;text-transform:uppercase;color:#6E6470;font-weight:400}
-.gtile[data-state=copied] .ghint{color:#E8683A}
+.gover{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;border-radius:20px;background:rgba(43,36,48,.74);color:#fff;font-family:var(--f-dm),system-ui,sans-serif;font-weight:700;font-size:.9rem;letter-spacing:.02em;opacity:0;transition:opacity .15s ease;pointer-events:none}
+.gtile:hover .gover,.gtile:focus-visible .gover,.gtile[data-state=copied] .gover{opacity:1}
+.gtile[data-state=copied] .gover{background:rgba(232,104,58,.9)}
 .studio{display:flex;flex-wrap:wrap;align-items:center;gap:14px 28px;padding:14px 16px;background:#fff;border:1px solid #EBDDD0;border-radius:20px}
 .ctl{display:flex;align-items:center;gap:10px}
 .ctl-label{font-family:ui-monospace,monospace;font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;color:#6E6470}
@@ -133,5 +134,5 @@ a.col:active .art svg, .col.pop .art svg { transform: scale(1.14) translateY(-3%
 .reset{all:unset;cursor:pointer;font-size:.88rem;font-weight:500;color:#E8683A;padding:4px 8px;border-radius:8px}
 .reset[hidden]{display:none}.reset:focus-visible{outline:3px solid #E8683A}
 .srOnly2{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-@media (prefers-reduced-motion:reduce){.gtile,.sw{transition:none}.gtile:hover,.sw:hover{transform:none}}
+@media (prefers-reduced-motion:reduce){.gover{transition:none}.gtile,.sw{transition:none}.gtile:hover,.sw:hover{transform:none}}
 

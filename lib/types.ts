@@ -29,6 +29,8 @@ export interface Gallery {
   title: string;
   subtitle: string;
   hasColor: boolean;
+  /** Swatch index selected on open (default: -1, mixed). */
+  defaultColor?: number;
   colors: { v: number; hex: string | null; title: string }[];
   inks: { hex: string; title: string }[];
   sections: Section[];

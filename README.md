@@ -1,6 +1,6 @@
 # Vector Shelf
 
-A Next.js (App Router) port of the "Vector Shelf" artifact: four full-height colour stripes (Mascot, Emote, Ghost, Cloud) that open galleries of 423 copy-ready SVG characters, with live Color / Style / Stroke / Eyes / Ink controls and copy-as SVG, React or Flutter.
+A Next.js (App Router) port of the "Vector Shelf" artifact: five full-height colour stripes (Mascot, Emote, Ghost, Cloud, Mushroom) that open galleries of copy-ready SVG characters, with live Color / Style / Stroke / Eyes / Ink controls and copy-as SVG, React or Flutter.
 
 ## Run
 
@@ -22,3 +22,5 @@ Push the folder to a Git repo and import it in Vercel (framework is auto-detecte
 - `lib/transform.ts` recolour, outline, stroke, eye-scale and SVG/React/Flutter export helpers
 - `data/*.json` the SVG data. Each gallery is a lazy chunk loaded on hover/click, so the home page stays small
 - `scripts/extract.mjs` the one-off script that turned the original artifact HTML into `data/`
+
+- `node scripts/mushroom/build.mjs` builds the Mushroom Buddy set (`scripts/mushroom/mushroom.mjs`, 17 reactions on one base character, `scripts/mushroom/base.svg`)
