@@ -62,7 +62,10 @@ const browPair = (inner = -22, outer = 0, y = 512, gap = 0) =>
 
 // ---- the shared character --------------------------------------------------
 let uid = 0;
-function mushroom({ face = "", behind = "", caps = "", front = "" }) {
+const BODY_SHADE = '<rect x="200" y="440" width="640" height="90" fill="#C9BBA3"/><path d="M200 780Q500 870 840 780V880H200Z" fill="#E4D4B5" opacity=".7"/><path d="M310 806Q500 834 690 806" stroke="#FFF9EC" stroke-width="9" opacity=".95"/>';
+
+/** `limbs` are drawn over the body and under the face, cap and any `front` props. */
+function mushroom({ face = "", behind = "", caps = "", front = "", hands = true, limbs = "" }) {
   const p = `m${++uid}`;
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${VB}" width="890" height="890" fill="none" stroke-linecap="round" stroke-linejoin="round">` +
     `<defs><clipPath id="${p}c"><path d="${CAP}"/></clipPath><clipPath id="${p}b"><path d="${BODY}"/></clipPath>` +
@@ -72,10 +75,11 @@ function mushroom({ face = "", behind = "", caps = "", front = "" }) {
     // tiny rounded feet
     `<g fill="#E9DABB" stroke="${INK}" stroke-width="12"><path d="${FOOT}"/><path d="${FOOT}" transform="${flipH(1000)}"/></g>` +
     // plush body
-    `<path d="${BODY}" fill="#F1E5CB"/><g clip-path="url(#${p}b)"><rect x="200" y="440" width="640" height="90" fill="#C9BBA3"/><path d="M200 780Q500 870 840 780V880H200Z" fill="#E4D4B5" opacity=".7"/><path d="M310 806Q500 834 690 806" stroke="#FFF9EC" stroke-width="9" opacity=".95"/></g>` +
+    `<path d="${BODY}" fill="#F1E5CB"/><g clip-path="url(#${p}b)">${BODY_SHADE}</g>` +
     `<path d="${BODY}" stroke="${INK}" stroke-width="12"/>` +
     // mitten hands
-    `<g fill="#EBDDBF" stroke="${INK}" stroke-width="12"><path d="${HAND}"/><path d="${HAND}" transform="${flipH(1030)}"/></g>` +
+    (hands ? `<g fill="#EBDDBF" stroke="${INK}" stroke-width="12"><path d="${HAND}"/><path d="${HAND}" transform="${flipH(1030)}"/></g>` : "") +
+    limbs +
     face +
     // glossy cap
     `<path d="${CAP}" fill="url(#${p}g)"/><g clip-path="url(#${p}c)"><path d="${CAP}" stroke="#FF7A76" stroke-width="46" opacity=".9"/><path d="M100 505Q300 440 500 420Q720 415 920 480V620H100Z" fill="url(#${p}d)" opacity=".92"/>` +
@@ -265,6 +269,23 @@ const butterfly = () => `<g transform="translate(872 590) rotate(12)">` +
   `<circle cx="-36" cy="-28" r="8" fill="#fff" opacity=".8"/><circle cx="36" cy="-28" r="8" fill="#fff" opacity=".8"/></g>`;
 const bubble = (x, y, r) => `<circle cx="${x}" cy="${y}" r="${r}" fill="#D8F0FF" fill-opacity=".65" stroke="${INK}" stroke-width="8"/><path d="M${f(x - r * 0.55)} ${f(y - r * 0.1)}Q${f(x - r * 0.5)} ${f(y - r * 0.55)} ${f(x - r * 0.1)} ${f(y - r * 0.6)}" stroke="#fff" stroke-width="${f(Math.max(5, r * 0.16))}" fill="none"/><circle cx="${f(x + r * 0.45)}" cy="${f(y + r * 0.42)}" r="${f(Math.max(3.5, r * 0.1))}" fill="#fff"/>`;
 const pucker = `<path d="M492 604Q492 592 505 598Q518 592 518 604Q518 616 505 624Q492 616 492 604Z" fill="#E4636F" stroke="${EYE}" stroke-width="7"/>`;
+// ---- "We're hiring": sign lettering is drawn as vector strokes (no font), so it stays identical everywhere ----
+const GLYPH = {
+  W: [44, "M0 0L10 60L22 18L34 60L44 0"], E: [30, "M30 0H0V60H30M0 30H24"], "'": [6, "M3 0V18"],
+  R: [32, "M0 60V0H18Q32 0 32 16Q32 32 18 32H0M16 32L32 60"], H: [32, "M0 0V60M32 0V60M0 30H32"], I: [0, "M0 0V60"],
+  N: [32, "M0 60V0L32 60V0"], G: [34, "M34 14Q30 0 17 0Q0 0 0 30Q0 60 17 60Q34 60 34 36H18"],
+};
+const word = (text, cx, y, gap = 14) => {
+  const gl = [...text].map((c) => GLYPH[c]);
+  let x = cx - (gl.reduce((a, g) => a + g[0], 0) + gap * (gl.length - 1)) / 2;
+  return gl.map(([w, d]) => { const o = `<path d="${d}" transform="translate(${f(x)} ${y})"/>`; x += w + gap; return o; }).join("");
+};
+const hiringSign = () =>
+  `<rect x="315" y="655" width="400" height="185" rx="32" fill="#FFD166" stroke="${INK}" stroke-width="11"/>` +
+  `<path d="M342 690Q342 678 356 678H402" stroke="#fff" stroke-opacity=".75" stroke-width="7" fill="none"/>` +
+  `<g stroke="#3A1020" stroke-width="11" fill="none">${word("WE'RE", 515, 683)}${word("HIRING", 515, 761)}</g>`;
+// the original hands, exactly where every Mushroom Buddy sticker has them (outer sides of the body), drawn over the board so they lightly overlap its side edges
+const heldHands = `<g fill="#EBDDBF" stroke="${INK}" stroke-width="12"><path d="${HAND}"/><path d="${HAND}" transform="${flipH(1030)}"/></g>`;
 const rosy = blush(34, 19, "#F07C7C");
 const smallSmile = smile("M470 578Q505 604 540 578", 9);
 activities.push(
@@ -278,12 +299,18 @@ activities.push(
   ["Solving a puzzle", () => tile({ face: rosy + eyes({ rx: 44, ry: 60, dy: 6, hr: 11, extra: false }) + line("M488 606Q505 598 522 606", 8), front: puzzle() })],
   ["Watching a butterfly", () => tile({ face: rosy + eyes({ rx: 46, ry: 71, hr: 14 }) + smallSmile, front: butterfly() })],
   ["Blowing bubbles", () => tile({ face: rosy + eyes({ rx: 46, ry: 70, hr: 14 }) + pucker, front: bubble(150, 590, 46) + bubble(95, 490, 26) + bubble(880, 590, 36) })],
+  // both hands grip the side edges of the sign
+  ["We're hiring", () => tile({
+    hands: false,
+    face: rosy + eyes({ rx: 45, ry: 70 }) + smile("M455 574Q505 616 556 574", 9),
+    front: hiringSign() + heldHands + sparkle(105, 330, 44) + sparkle(905, 320, 38),
+  })],
 );
 
 export const groups = [
   { title: "Happy & loved", desc: "Four joyful reactions: super happy, shy, proud and in love.", tiles: happy },
   { title: "Sad", desc: "Four gentle sad moods: crying, disappointed, worried and heartbroken.", tiles: sad },
   { title: "Funny", desc: "Four silly reactions: silly, winking, shocked and laughing.", tiles: funny },
-  { title: "Little activities", desc: "Fifteen small everyday moments: boba, music, a flower, a crown, a gift, a cozy scarf, a cookie, photos, painting, a puzzle, a butterfly and bubbles.", tiles: activities },
+  { title: "Little activities", desc: "Sixteen small everyday moments: boba, music, a flower, a crown, a gift, a cozy scarf, a cookie, photos, painting, a puzzle, a butterfly, bubbles and a hiring sign.", tiles: activities },
 ];
 export default groups;

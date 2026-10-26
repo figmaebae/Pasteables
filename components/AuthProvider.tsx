@@ -5,6 +5,7 @@ import type { ReactNode } from "react";
 import { GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut as fbSignOut } from "firebase/auth";
 import type { User } from "firebase/auth";
 import { getFirebaseAuth } from "@/lib/firebase";
+import { clearActive, hasExpired, markActive, readLastActive } from "@/lib/session";
 
 type Reason = "start" | "copy";
 
@@ -61,17 +62,60 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
   const dialog = useRef<HTMLDialogElement>(null);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const after = useRef<(() => Promise<boolean>) | null>(null);
+  const expired = useRef(false);
 
+  // Auth state, plus the 14-day inactivity rule: away for longer than that means signing in again.
   useEffect(() => {
+    let unsub = () => {};
     try {
-      return onAuthStateChanged(getFirebaseAuth(), (u) => {
+      const auth = getFirebaseAuth();
+      unsub = onAuthStateChanged(auth, (u) => {
+        if (u && hasExpired(readLastActive())) {
+          clearActive();
+          setUser(null);
+          setLoading(false);
+          void fbSignOut(auth);
+          expired.current = true;
+          return;
+        }
+        if (u) markActive();
+        else clearActive();
         setUser(u);
         setLoading(false);
+        if (!u && expired.current) {
+          expired.current = false;
+          say("You were signed out after 2 weeks away. Sign in again to keep copying.");
+        }
       });
     } catch {
       setLoading(false);
     }
+    return () => unsub();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // While signed in, any activity renews the 14 days (written at most once a minute).
+  useEffect(() => {
+    if (!user) return;
+    let last = 0;
+    const touch = () => {
+      const now = Date.now();
+      if (now - last < 60_000) return;
+      last = now;
+      markActive(now);
+    };
+    const onVisible = () => {
+      if (document.visibilityState === "visible") touch();
+    };
+    const events = ["pointerdown", "keydown", "scroll", "focus"] as const;
+    events.forEach((e) => window.addEventListener(e, touch, { passive: true }));
+    document.addEventListener("visibilitychange", onVisible);
+    touch();
+    return () => {
+      events.forEach((e) => window.removeEventListener(e, touch));
+      document.removeEventListener("visibilitychange", onVisible);
+    };
+  }, [user]);
 
   // Keep the native <dialog> in step with `open`.
   useEffect(() => {

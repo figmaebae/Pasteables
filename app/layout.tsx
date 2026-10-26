@@ -10,9 +10,25 @@ const brico = Bricolage_Grotesque({ subsets: ["latin"], weight: ["700", "800"], 
 const fig = Figtree({ subsets: ["latin"], weight: ["400", "500", "600", "700"], variable: "--f-fig", display: "swap" });
 const dm = DM_Sans({ subsets: ["latin"], weight: ["400", "500", "700"], variable: "--f-dm", display: "swap" });
 
+const SITE = "https://pasteables.vercel.app";
+const DESCRIPTION = "Cute vector stickers you can tweak and copy as SVG, React or Flutter code. Mascots, emotes, ghosts, clouds and mushrooms.";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE),
   title: "Pasteables",
-  description: "Little vectors, one click away. Mascots, emoticons, ghosts and clouds you can copy as SVG, React or Flutter.",
+  description: DESCRIPTION,
+  openGraph: {
+    type: "website",
+    url: SITE,
+    siteName: "Pasteables",
+    title: "Pasteables: cute vectors, ready to paste",
+    description: DESCRIPTION,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Pasteables: cute vectors, ready to paste",
+    description: DESCRIPTION,
+  },
 };
 
 export const viewport: Viewport = {
