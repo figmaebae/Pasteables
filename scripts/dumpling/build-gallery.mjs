@@ -62,7 +62,7 @@ const sections = SECTIONS.map((s) => {
 
 const gallery = {
   id: "dumpling", title: "Dumpling", subtitle: `${n} tiny dumpling reactions. Click any one to copy it.`,
-  hasColor: false, defaultEyes: 0.8, colors: [], inks: INKS, inkFrom: [INK, EYE], sections,
+  hasColor: false, colors: [], inks: INKS, inkFrom: [INK, EYE], sections,
 };
 fs.writeFileSync("data/gallery-dumpling.json", JSON.stringify(gallery));
 
