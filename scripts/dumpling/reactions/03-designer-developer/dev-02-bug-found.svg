@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-80 44 560 440" fill="none" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Dumpling Buddy: Bug Found">
+  <defs><clipPath id="dumpling-body"><path d="M135 176Q156 126 178 160Q199 126 221 160Q242 126 264 176C270 198 300 206 330 240C366 282 374 346 340 386C310 420 252 428 200 428C148 428 90 420 60 386C26 346 34 282 70 240C100 210 128 200 135 176Z"/></clipPath></defs>
+  <g id="behind"><g transform="translate(394 446) scale(1.25) translate(-394 -446)"><g stroke="#4A2418" stroke-width="3.4" stroke-linejoin="round"><path d="M342 430L446 430L452 446L336 446Z" fill="#C9D1DE"/><rect x="350" y="376" width="90" height="54" rx="7" fill="#2B3550"/></g><path d="M360 390H396M360 402H412M372 414H404" stroke="#4CC38A" stroke-width="5"/><path d="M396 390H420" stroke="#FF9F5A" stroke-width="5"/></g></g>
+  <!-- short legs (behind the body) -->
+  <g id="legs" fill="#FCE6C6" stroke="#4A2418" stroke-width="4.6">
+    <rect x="130" y="414" width="46" height="42" rx="19"/>
+    <rect x="223" y="414" width="46" height="42" rx="19"/>
+  </g>
+  <!-- hands: behind the body, most of each mitten shows outside the outline -->
+  <g id="hands" fill="#FCE6C6" stroke="#4A2418" stroke-width="4.6"><ellipse cx="37" cy="373" rx="24.5" ry="22" transform="rotate(-12 37 373)"/><ellipse cx="363" cy="371" rx="24.5" ry="22" transform="rotate(12 363 371)"/></g>
+  <!-- body -->
+  <g id="body">
+    <path d="M135 176Q156 126 178 160Q199 126 221 160Q242 126 264 176C270 198 300 206 330 240C366 282 374 346 340 386C310 420 252 428 200 428C148 428 90 420 60 386C26 346 34 282 70 240C100 210 128 200 135 176Z" fill="#FCE6C6"/>
+    <g clip-path="url(#dumpling-body)">
+      <path d="M26 352Q200 468 380 328V470H26Z" fill="#F1C48C" opacity=".5"/>
+      <path d="M338 300Q350 352 318 398" stroke="#F1C48C" stroke-width="20" opacity=".45"/>
+    </g>
+    <path d="M135 176Q156 126 178 160Q199 126 221 160Q242 126 264 176C270 198 300 206 330 240C366 282 374 346 340 386C310 420 252 428 200 428C148 428 90 420 60 386C26 346 34 282 70 240C100 210 128 200 135 176Z" stroke="#4A2418" stroke-width="4.6"/>
+    <path d="M96 216L108 208" stroke="#FCE6C6" stroke-width="7"/>
+  </g>
+  <!-- face -->
+  <g id="face">
+    <g transform="translate(6 0)"><ellipse cx="135" cy="292" rx="25" ry="26.5" fill="#3A1D14"/><ellipse cx="262" cy="290" rx="25" ry="26.5" fill="#3A1D14"/><circle cx="145" cy="282" r="9" fill="#fff"/><circle cx="272" cy="280" r="9" fill="#fff"/><circle cx="125" cy="304" r="4" fill="#fff"/><circle cx="252" cy="302" r="4" fill="#fff"/></g>
+    <path d="M162 311Q197 376 232 311Z" fill="#7A2E35" stroke="#4A2418" stroke-width="4.4" stroke-linejoin="round"/><ellipse cx="197" cy="335" rx="13" ry="7" fill="#F0788A"/>
+    <g stroke="#F0647A" stroke-width="5">
+      <path d="M78 330L89 314M91 333L102 317M104 335L115 319"/>
+      <path d="M287 328L298 312M300 331L311 315M313 333L324 317"/>
+    </g>
+  </g>
+  <g id="props"><g transform="translate(394 446) scale(1.25) translate(-394 -446)"><g transform="translate(404 352)"><path d="M-14 -4L-24 -12M-14 4L-26 6M14 -4L24 -12M14 4L26 6M-7 -16L-12 -26M7 -16L12 -26" stroke="#4A2418" stroke-width="3.2"/><g stroke="#4A2418" stroke-width="3.4" stroke-linejoin="round"><ellipse cx="0" cy="0" rx="15" ry="13" fill="#FF7A7A"/><circle cx="0" cy="-15" r="8" fill="#FF7A7A"/></g><circle cx="-3" cy="-17" r="2" fill="#fff"/><circle cx="3" cy="-17" r="2" fill="#fff"/><path d="M0 -10V12" stroke="#4A2418" stroke-width="2.4"/><circle cx="-7" cy="0" r="2.4" fill="#4A2418"/><circle cx="7" cy="4" r="2.4" fill="#4A2418"/></g></g><path d="M372 170V194" stroke="#4A2418" stroke-width="12"/><path d="M372 170V194" stroke="#FF7A7A" stroke-width="6"/><circle cx="372" cy="210" r="6.5" fill="#FF7A7A" stroke="#4A2418" stroke-width="3"/></g>
+</svg>

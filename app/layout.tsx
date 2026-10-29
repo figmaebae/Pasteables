@@ -11,7 +11,7 @@ const fig = Figtree({ subsets: ["latin"], weight: ["400", "500", "600", "700"], 
 const dm = DM_Sans({ subsets: ["latin"], weight: ["400", "500", "700"], variable: "--f-dm", display: "swap" });
 
 const SITE = "https://pasteables.vercel.app";
-const DESCRIPTION = "Cute vector stickers you can tweak and copy as SVG, React or Flutter code. Mascots, emotes, ghosts, clouds and mushrooms.";
+const DESCRIPTION = "Cute vector stickers you can tweak and copy as SVG, React or Flutter code. Mascots, emotes, ghosts, clouds, mushrooms and dumplings.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE),

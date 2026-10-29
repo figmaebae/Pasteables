@@ -54,12 +54,24 @@ const ICON_PATHS = [
   "M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8zM4 21a8 8 0 0 1 16 0",
 ];
 
-const COLORS: Record<string, { cls: string; art: CSSProperties; dark?: boolean }> = {
-  mascot: { cls: "lp-c-mascot", art: { right: "4%", bottom: 0, width: "60%" } },
-  emoticons: { cls: "lp-c-emote", dark: true, art: { right: "3%", bottom: 0, width: "40%" } },
-  ghost: { cls: "lp-c-ghost", art: { right: "6%", bottom: 0, width: "34%" } },
-  clouds: { cls: "lp-c-cloud", art: { right: "3%", bottom: "-3%", width: "27%" } },
-  mushroom: { cls: "lp-c-mushroom", art: { right: "2%", bottom: 0, width: "40%" } },
+/** Tight canvas for each pack's character and its width (as a share of the sticker box), so all six look the same size. */
+const FIT: Record<string, { vb: string; wf: number }> = {
+  mascot: { vb: "44.3 31.6 195.2 256.9", wf: 0.766 },
+  emoticons: { vb: "7.7 58.2 284.6 251.1", wf: 0.893 },
+  ghost: { vb: "14.2 73.0 211.6 193.5", wf: 0.936 },
+  clouds: { vb: "-5.0 58.3 250.0 180.9", wf: 1.073 },
+  mushroom: { vb: "27.3 98.9 945.4 819.8", wf: 0.901 },
+  dumpling: { vb: "-2.5 132.0 405.0 348.9", wf: 0.893 },
+};
+
+/** Panel colors per pack. */
+const COLORS: Record<string, { bg: string; fg: string; dark?: boolean }> = {
+  mascot: { bg: "#C4B5A5", fg: "#2c241c" },
+  emoticons: { bg: "#DB5368", fg: "#fff", dark: true },
+  ghost: { bg: "#E5FAC9", fg: "#5F7B2F" },
+  clouds: { bg: "#DEE8FF", fg: "#1E2E86" },
+  mushroom: { bg: "#EADFFA", fg: "#4A2C8A" },
+  dumpling: { bg: "#FBE7C4", fg: "#6B3A1E" },
 };
 
 function scrollToId(id: string) {
@@ -115,7 +127,6 @@ export default function Landing({
   }, []);
 
   const initial = (user?.displayName || user?.email || "?").trim().charAt(0).toUpperCase();
-  const art = (id: string) => hero.find((h) => h.id === id)?.svg ?? "";
 
   return (
     <div className="lp">
@@ -170,25 +181,33 @@ export default function Landing({
           </div>
         </section>
 
+        <div className="lp-paper">
         <section className="lp-gray" id="packs">
-          <h2>Pick a pack</h2>
-          <div className="lp-bento">
+          <h2><span className="lp-hl">Pick a pack</span></h2>
+          <div className="lp-sheet">
             {hero.map((h) => {
               const c = COLORS[h.id];
               if (!c) return null;
               return (
                 <a
                   key={h.id}
-                  className={`lp-card ${c.cls}${c.dark ? " dark" : ""}`}
+                  className="lp-pk"
                   href={`#${h.id}`}
+                  style={{ ["--pk" as string]: c.bg }}
+                  aria-label={`${h.name}, ${h.count.replace("#", "")} stickers`}
                   onClick={(e) => onOpenPack(h.id, e)}
                   onMouseEnter={() => onWarm(h.id)}
                   onFocus={() => onWarm(h.id)}
                 >
-                  <h3>{h.name}</h3>
-                  <p>{h.desc}</p>
-                  <span className="lp-chip">{h.count.replace("#", "")} stickers →</span>
-                  <div className="lp-art" style={c.art} aria-hidden="true" dangerouslySetInnerHTML={{ __html: art(h.id) }} />
+                  <span
+                    className="lp-pkart"
+                    style={{ ["--wf" as string]: FIT[h.id]?.wf ?? 0.8 }}
+                    aria-hidden="true"
+                    dangerouslySetInnerHTML={{ __html: FIT[h.id] ? h.svg.replace(/^<svg[^>]*>/, (tag) => tag.replace(/ width="[^"]*" height="[^"]*"/, "").replace(/viewBox="[^"]*"/, `viewBox="${FIT[h.id].vb}"`)) : h.svg }}
+                  />
+                  <span className="lp-tag">
+                    {h.name} <small>{h.count.replace("#", "")}</small>
+                  </span>
                 </a>
               );
             })}
@@ -208,6 +227,7 @@ export default function Landing({
             })}
           </p>
         </section>
+        </div>
 
         <section className="lp-end">
           <div className="lp-end-in">

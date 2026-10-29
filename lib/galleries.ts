@@ -6,5 +6,6 @@ export const GALLERY_LOADERS: Record<string, () => Promise<Gallery>> = {
   emoticons: () => import("@/data/gallery-emoticons.json").then((m) => m.default as Gallery),
   ghost: () => import("@/data/gallery-ghost.json").then((m) => m.default as Gallery),
   mushroom: () => import("@/data/gallery-mushroom.json").then((m) => m.default as Gallery),
+  dumpling: () => import("@/data/gallery-dumpling.json").then((m) => m.default as Gallery),
   clouds: () => import("@/data/gallery-clouds.json").then((m) => m.default as Gallery),
 };

@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-40 62 480 424" fill="none" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Dumpling Buddy: Celebrating / Yay!">
+  <defs><clipPath id="dumpling-body"><path d="M135 176Q156 126 178 160Q199 126 221 160Q242 126 264 176C270 198 300 206 330 240C366 282 374 346 340 386C310 420 252 428 200 428C148 428 90 420 60 386C26 346 34 282 70 240C100 210 128 200 135 176Z"/></clipPath></defs>
+  <!-- short legs (behind the body) -->
+  <g id="legs" fill="#FCE6C6" stroke="#4A2418" stroke-width="4.6">
+    <rect x="130" y="414" width="46" height="42" rx="19"/>
+    <rect x="223" y="414" width="46" height="42" rx="19"/>
+  </g>
+  <!-- hands: behind the body, most of each mitten shows outside the outline -->
+  <g id="hands" fill="#FCE6C6" stroke="#4A2418" stroke-width="4.6"><ellipse cx="51.6" cy="258" rx="24.5" ry="22" transform="rotate(-52 51.6 258)"/><ellipse cx="348.4" cy="258" rx="24.5" ry="22" transform="rotate(52 348.4 258)"/></g>
+  <!-- body -->
+  <g id="body">
+    <path d="M135 176Q156 126 178 160Q199 126 221 160Q242 126 264 176C270 198 300 206 330 240C366 282 374 346 340 386C310 420 252 428 200 428C148 428 90 420 60 386C26 346 34 282 70 240C100 210 128 200 135 176Z" fill="#FCE6C6"/>
+    <g clip-path="url(#dumpling-body)">
+      <path d="M26 352Q200 468 380 328V470H26Z" fill="#F1C48C" opacity=".5"/>
+      <path d="M338 300Q350 352 318 398" stroke="#F1C48C" stroke-width="20" opacity=".45"/>
+    </g>
+    <path d="M135 176Q156 126 178 160Q199 126 221 160Q242 126 264 176C270 198 300 206 330 240C366 282 374 346 340 386C310 420 252 428 200 428C148 428 90 420 60 386C26 346 34 282 70 240C100 210 128 200 135 176Z" stroke="#4A2418" stroke-width="4.6"/>
+    <path d="M96 216L108 208" stroke="#FCE6C6" stroke-width="7"/>
+  </g>
+  <!-- face -->
+  <g id="face">
+    <path d="M111 298Q135 270 159 298M238 296Q262 268 286 296" stroke="#3A1D14" stroke-width="7"/>
+    <path d="M162 311Q197 376 232 311Z" fill="#7A2E35" stroke="#4A2418" stroke-width="4.4" stroke-linejoin="round"/><ellipse cx="197" cy="335" rx="13" ry="7" fill="#F0788A"/>
+    <g stroke="#F0647A" stroke-width="5">
+      <path d="M78 330L89 314M91 333L102 317M104 335L115 319"/>
+      <path d="M287 328L298 312M300 331L311 315M313 333L324 317"/>
+    </g>
+  </g>
+  <g id="props"><rect x="35" y="110" width="10" height="20" rx="3" fill="#FF6FA0" stroke="#4A2418" stroke-width="3" transform="rotate(20 40 120)"/><path d="M110 75L119 91L101 91Z" fill="#5BC0EB" stroke="#4A2418" stroke-width="3" stroke-linejoin="round" transform="rotate(-30 110 84)"/><circle cx="200" cy="98" r="7" fill="#FFC83D" stroke="#4A2418" stroke-width="3"/><rect x="285" y="74" width="10" height="20" rx="3" fill="#7BD389" stroke="#4A2418" stroke-width="3" transform="rotate(30 290 84)"/><path d="M360 109L369 125L351 125Z" fill="#B58AF0" stroke="#4A2418" stroke-width="3" stroke-linejoin="round" transform="rotate(-20 360 118)"/><rect x="3" y="186" width="10" height="20" rx="3" fill="#FFC83D" stroke="#4A2418" stroke-width="3" transform="rotate(40 8 196)"/><circle cx="396" cy="198" r="7" fill="#FF6FA0" stroke="#4A2418" stroke-width="3"/><circle cx="70" cy="70" r="7" fill="#7BD389" stroke="#4A2418" stroke-width="3"/><rect x="330" y="56" width="10" height="20" rx="3" fill="#5BC0EB" stroke="#4A2418" stroke-width="3" transform="rotate(25 335 66)"/><g stroke="#4A2418" stroke-width="3.4" stroke-linejoin="round"><path d="M160 67Q162 76 171 78Q162 80 160 89Q158 80 149 78Q158 76 160 67Z" fill="#FFC83D"/></g><g stroke="#4A2418" stroke-width="3.4" stroke-linejoin="round"><path d="M250 61Q251.6 68.4 259 70Q251.6 71.6 250 79Q248.4 71.6 241 70Q248.4 68.4 250 61Z" fill="#FFC83D"/></g></g>
+</svg>

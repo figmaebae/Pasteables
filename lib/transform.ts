@@ -98,6 +98,8 @@ export interface TransformOptions {
     stroke: number;
     ink: string;
     eyes?: number;
+    /** Extra colors (a pack's own outline/eye colors) that follow the Ink option once it is changed from the default. */
+    inkFrom?: string[];
 }
 export function transformSvg(svg: string, o: TransformOptions) {
     let s = svg;
@@ -134,6 +136,9 @@ export function transformSvg(svg: string, o: TransformOptions) {
     // 3. ink color
     for (const i of INKS)
         s = s.replace(new RegExp(esc(i), "gi"), o.ink);
+    if (o.inkFrom && o.ink.toLowerCase() !== DEFAULT_INK.toLowerCase())
+        for (const c of o.inkFrom)
+            s = s.replace(new RegExp(esc(c), "gi"), o.ink);
     // 4. eye size
     s = scaleEyes(s, o.eyes ?? 1);
     // 5. clean helper attributes

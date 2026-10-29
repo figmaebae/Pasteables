@@ -114,10 +114,12 @@ const SectionView = memo(function SectionView({
   section,
   st,
   onCopied,
+  inkFrom,
 }: {
   section: Section;
   st: Studio;
   onCopied: (msg: string) => void;
+  inkFrom?: string[];
 }) {
   const { palette, base } = section;
   const outlined = st.style === "outlined";
@@ -128,7 +130,7 @@ const SectionView = memo(function SectionView({
     const hex =
       palette.length && base ? (st.color === -1 ? palette[i % palette.length] : palette[Math.min(st.color, palette.length - 1)]) : undefined;
     const src = outlined && t.alt ? t.alt : t.svg;
-    return transformSvg(src, { from: base || undefined, to: hex, outlined, stroke: st.stroke, ink: st.ink, eyes: st.eyes });
+    return transformSvg(src, { from: base || undefined, to: hex, outlined, stroke: st.stroke, ink: st.ink, eyes: st.eyes, inkFrom });
   };
 
   const copyNow = async (t: Tile, i: number, quiet = false) => {
@@ -310,7 +312,7 @@ export default function GalleryView({
         </div>
 
         {gallery.sections.map((s) => (
-          <SectionView key={s.title} section={s} st={st} onCopied={onCopied} />
+          <SectionView key={s.title} section={s} st={st} onCopied={onCopied} inkFrom={gallery.inkFrom} />
         ))}
       </div>
     </div>

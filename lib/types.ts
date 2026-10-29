@@ -33,6 +33,8 @@ export interface Gallery {
   defaultColor?: number;
   /** Eyes slider value on open (default: 1). */
   defaultEyes?: number;
+  /** The pack's own outline/eye colors, which follow the Ink option (packs not drawn in the shared ink colors). */
+  inkFrom?: string[];
   colors: { v: number; hex: string | null; title: string }[];
   inks: { hex: string; title: string }[];
   sections: Section[];
