@@ -61,6 +61,19 @@ function scaleEyes(svg: string, k?: number) {
         const els = inner.match(/<(circle|ellipse|path|rect)\b[^>]*?(?:\/>|><\/\1>)/g);
         if (!els || !els.length)
             return whole;
+        // art that names each eye's own centre (data-ec): scale every part of that eye (eye, brow, lid) around it
+        if (els.every((e: string) => / data-ec="/.test(e))) {
+            const byCentre = new Map<string, string[]>();
+            for (const e of els) {
+                const c = (e.match(/ data-ec="([^"]+)"/) ?? [])[1];
+                byCentre.set(c, [...(byCentre.get(c) ?? []), e.replace(/ data-ec="[^"]*"/, "")]);
+            }
+            const groups = [...byCentre].map(([c, g]) => {
+                const [cx, cy] = c.split(" ").map(Number);
+                return `<g transform="translate(${num(cx)} ${num(cy)}) scale(${num(k)}) translate(${num(-cx)} ${num(-cy)})">${g.join("")}</g>`;
+            });
+            return `<g id="Eyes">${groups.join("")}</g>`;
+        }
         const centres: [number, number][] = els.map((e): [number, number] => {
             const cx = e.match(/ cx="(-?[\d.]+)"/);
             const cy = e.match(/ cy="(-?[\d.]+)"/);
@@ -142,7 +155,7 @@ export function transformSvg(svg: string, o: TransformOptions) {
     // 4. eye size
     s = scaleEyes(s, o.eyes ?? 1);
     // 5. clean helper attributes
-    return s.replace(/ data-(?:ow|bs|jp|fit)="[^"]*"/g, "").trim();
+    return s.replace(/ data-(?:ow|bs|jp|fit|ec)="[^"]*"/g, "").trim();
 }
 // ---------- code export ----------
 function pascal(name: string) {

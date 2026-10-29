@@ -19,7 +19,7 @@
   </g>
   <!-- face -->
   <g id="face">
-    <ellipse cx="135" cy="293" rx="25.5" ry="27.5" fill="#3A1D14"/><ellipse cx="262" cy="291" rx="25.5" ry="27.5" fill="#3A1D14"/><path d="M112.5 296A22.5 23.5 0 0 0 157.5 296Z" fill="#8FD3FF" opacity=".42"/><path d="M239.5 294A22.5 23.5 0 0 0 284.5 294Z" fill="#8FD3FF" opacity=".42"/><circle cx="146" cy="281" r="11" fill="#fff"/><circle cx="273" cy="279" r="11" fill="#fff"/><circle cx="124" cy="304" r="4.5" fill="#fff"/><circle cx="251" cy="302" r="4.5" fill="#fff"/><path d="M107 266L157 248M240 246L290 264" stroke="#4A2418" stroke-width="4.6"/>
+    <ellipse cx="135" cy="293" rx="25.5" ry="27.5" fill="#3A1D14"/><ellipse cx="262" cy="291" rx="25.5" ry="27.5" fill="#3A1D14"/><path d="M112.5 296A22.5 23.5 0 0 0 157.5 296Z" fill="#8FD3FF" opacity=".42"/><path d="M239.5 294A22.5 23.5 0 0 0 284.5 294Z" fill="#8FD3FF" opacity=".42"/><circle cx="146" cy="281" r="11" fill="#fff"/><circle cx="273" cy="279" r="11" fill="#fff"/><circle cx="124" cy="304" r="4.5" fill="#fff"/><circle cx="251" cy="302" r="4.5" fill="#fff"/>
     <path d="M182 337Q197 322 212 337" stroke="#4A2418" stroke-width="4.6"/>
     <g opacity=".55"><g stroke="#F0647A" stroke-width="5">
       <path d="M78 330L89 314M91 333L102 317M104 335L115 319"/>

@@ -6,10 +6,9 @@ const f = (n) => Math.round(n * 10) / 10;
 const BLUE = "#8FD3FF";
 export const shift = (markup, dx = 0, dy = 0) => `<g transform="translate(${dx} ${dy})">${markup}</g>`;
 
-/** Sad eyebrows: inner ends raised. */
-export const browsSad = (tilt = 1) => `<path d="M107 ${f(264 + 2 * tilt)}L157 ${f(250 - 2 * tilt)}M240 ${f(248 - 2 * tilt)}L290 ${f(262 + 2 * tilt)}" stroke="${INK}" stroke-width="4.6"/>`;
-/** Flat, heavy brows (disappointed). */
-export const browsFlat = `<path d="M108 262L156 258M242 256L290 260" stroke="${INK}" stroke-width="4.6"/>`;
+/** Eyebrows were removed from the Dumpling set; these stay as empty so the reaction definitions don't change. */
+export const browsSad = () => "";
+export const browsFlat = "";
 
 /** Big watery eyes: large dark eyes, big highlights and a pale blue shimmer along the bottom. */
 export const eyesWatery = (big = 1) => {

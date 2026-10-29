@@ -20,7 +20,7 @@
   <!-- face -->
   <g id="face">
     <ellipse cx="135" cy="294" rx="22" ry="23.5" fill="#3A1D14"/><ellipse cx="262" cy="292" rx="22" ry="23.5" fill="#3A1D14"/>
-    <circle cx="142" cy="302" r="7" fill="#fff"/><circle cx="269" cy="300" r="7" fill="#fff"/><circle cx="127" cy="310" r="3" fill="#fff"/><circle cx="254" cy="308" r="3" fill="#fff"/><path d="M107 266L157 248M240 246L290 264" stroke="#4A2418" stroke-width="4.6"/>
+    <circle cx="142" cy="302" r="7" fill="#fff"/><circle cx="269" cy="300" r="7" fill="#fff"/><circle cx="127" cy="310" r="3" fill="#fff"/><circle cx="254" cy="308" r="3" fill="#fff"/>
     <path d="M182 337Q197 322 212 337" stroke="#4A2418" stroke-width="4.6"/>
     <g opacity=".55"><g stroke="#F0647A" stroke-width="5">
       <path d="M78 330L89 314M91 333L102 317M104 335L115 319"/>

@@ -15,7 +15,7 @@ const UP_R = [326, 18], UP_L = [326, -18], ARMS = { yL: 268, rotL: -40, yR: 268,
 // ---- faces
 const flat = `<path d="M186 331L208 331" stroke="${INK}" stroke-width="4.6"/>`;
 const hmm = `<path d="M184 333Q197 325 210 333" stroke="${INK}" stroke-width="4.6"/>`;
-const browsUneven = `<path d="M108 262L156 252M240 258L290 266" stroke="${INK}" stroke-width="4.6"/>`;
+const browsUneven = ""; // no eyebrows in the Dumpling set
 const browsWorry = P.browsSad(2);
 const focus = P.eyesSide(8) + P.browsFlat;
 

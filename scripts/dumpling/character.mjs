@@ -139,5 +139,24 @@ function tagEyes(eyes) {
   const m = eyes.match(/^(<g transform="translate\([^)]*\)">)([\s\S]*)<\/g>$/);
   const [open, inner, close] = m ? [m[1], m[2], "</g>"] : ["", eyes, ""];
   if (inner.includes("<g")) throw new Error("eyes contain a nested group; cannot tag");
-  return `${open}<g id="Eyes">${inner}</g>${close}`;
+  // one element per eye part: a path that draws both eyes/brows (several M commands) is split into one path per eye
+  const parts = [];
+  for (const el of inner.match(/<(?:circle|ellipse|path|rect)\b[^>]*\/>/g) ?? []) {
+    const d = el.match(/ d="([^"]*)"/);
+    if (d && (d[1].match(/M/g) ?? []).length > 1) for (const sub of d[1].split(/(?=M)/)) parts.push(el.replace(d[0], ` d="${sub}"`));
+    else parts.push(el);
+  }
+  if (inner.replace(/<(?:circle|ellipse|path|rect)\b[^>]*\/>/g, "").trim()) throw new Error("unrecognised eye markup");
+  const x0 = (el) => {
+    const n = (k) => parseFloat((el.match(new RegExp(` ${k}="(-?[\\d.]+)"`)) ?? [])[1]);
+    return /^<(?:circle|ellipse)/.test(el) ? n("cx") : /^<rect/.test(el) ? n("x") + n("width") / 2 : parseFloat((el.match(/ d="M(-?[\d.]+)/) ?? [])[1]);
+  };
+  // each eye is scaled around its own centre (the big dark ellipse when there is one, else the usual spot)
+  const centre = (left) => {
+    const big = parts.find((el) => /^<ellipse/.test(el) && /rx="(?:2\d|3\d)/.test(el) && (x0(el) < 198) === left);
+    return big ? [parseFloat(big.match(/ cx="(-?[\d.]+)"/)[1]), parseFloat(big.match(/ cy="(-?[\d.]+)"/)[1])] : left ? [135, 293] : [262, 291];
+  };
+  const c = { true: centre(true), false: centre(false) };
+  const tagged = parts.map((el) => el.replace(/^<(\w+)/, `<$1 data-ec="${c[x0(el) < 198].join(" ")}"`)).join("");
+  return `${open}<g id="Eyes">${tagged}</g>${close}`;
 }
