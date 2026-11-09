@@ -1,9 +1,14 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import type { CSSProperties, MouseEvent } from "react";
+import { useAccess } from "./AccessProvider";
 import { useAuth } from "./AuthProvider";
+import IconArt from "./IconArt";
+import iconPreview from "@/data/icons-preview.json";
 import stickerData from "@/data/landing-stickers.json";
+import type { IconDef, IconStyle } from "@/lib/icons/render";
 import type { HeroColumn } from "@/lib/types";
 
 const S = stickerData as Record<string, string>;
@@ -44,14 +49,12 @@ const MANIFESTO: (string | { s: string })[] = [
   "giving", "every", "project", "a", "little", "more", "joy.", { s: "m4" },
 ];
 
-/** A peek at the first icon pack (line icons) for the closing card. */
-const ICON_PATHS = [
-  "M3 11l9-8 9 8M5 10v10h14V10",
-  "M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zM20 20l-4-4",
-  "M6 8a6 6 0 0 1 12 0c0 7 3 8 3 8H3s3-1 3-8M10 20a2 2 0 0 0 4 0",
-  "M3 7h18v12H3zM3 9l9 6 9-6",
-  "M12 21s-8-5-8-11a4.5 4.5 0 0 1 8-2.5A4.5 4.5 0 0 1 20 10c0 6-8 11-8 11z",
-  "M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8zM4 21a8 8 0 0 1 16 0",
+/** The icons shown on the homepage: 12 on a light panel and 12 on a dark one, one row per style. */
+const ICONS = iconPreview as { total: number; categories: number; icons: IconDef[] };
+const ROW_STYLES: IconStyle[] = ["line", "solid", "duotone"];
+const PANELS = [
+  { cls: "light", icons: ICONS.icons.slice(0, 12) },
+  { cls: "dark", icons: ICONS.icons.slice(12, 24) },
 ];
 
 /** Tight canvas for each pack's character and its width (as a share of the sticker box), so all six look the same size. */
@@ -93,6 +96,7 @@ export default function Landing({
   onHome: () => void;
 }) {
   const { user, loading, requestSignIn, signOut } = useAuth();
+  const { active, openUpgrade } = useAccess();
   const manifest = useRef<HTMLElement>(null);
   const [progress, setProgress] = useState(0);
   const total = MANIFESTO.length;
@@ -131,9 +135,19 @@ export default function Landing({
   return (
     <div className="lp">
       <div className="lp-top">
-        <button type="button" className="lp-word" onClick={onHome} aria-label="Pasteables home">
-          <img className="lp-logo-img" src="/logo.png" alt="" width={40} height={40} />
-          <span className="lp-wordtext">Pasteables</span>
+        <div className="lp-left">
+          <button type="button" className="lp-word" onClick={onHome} aria-label="Pasteables home">
+            <img className="lp-logo-img" src="/logo.png" alt="" width={40} height={40} />
+            <span className="lp-wordtext">Pasteables</span>
+          </button>
+          <nav className="lp-nav" aria-label="Main">
+            <button type="button" onClick={() => scrollToId("packs")}>Stickers</button>
+            <Link href="/icons">Icons</Link>
+          </nav>
+        </div>
+        <div className="lp-right">
+        <button type="button" className={`lp-unlock${active ? " pro" : ""}`} onClick={() => openUpgrade("menu")}>
+          {active ? "Full access" : "Unlock all"}
         </button>
         {loading ? null : user ? (
           <div className="lp-me">
@@ -144,6 +158,7 @@ export default function Landing({
         ) : (
           <button type="button" className="lp-pill" onClick={() => requestSignIn("start")}>Get started</button>
         )}
+        </div>
       </div>
 
       <main>
@@ -214,6 +229,34 @@ export default function Landing({
           </div>
         </section>
 
+        <section className="lp-ico" id="icons" aria-labelledby="lp-ico-h">
+          <div className="lp-ico-in">
+            <div className="lp-ico-copy">
+              <small>Icons</small>
+              <h2 id="lp-ico-h">Icons for every idea.</h2>
+              <p>A growing collection of beautiful, customizable icons for designers and developers.</p>
+              <Link className="lp-pill big" href="/icons">Explore Icons</Link>
+              <ul className="lp-ico-facts" aria-label="Highlights">
+                <li><b>{ICONS.total}</b> icons</li>
+                <li><b>3</b> styles</li>
+                <li><b>SVG</b>, React, Flutter</li>
+              </ul>
+            </div>
+            <div className="lp-ico-show" aria-hidden="true">
+              {PANELS.map((pn) => (
+                <div key={pn.cls} className={`lp-icp ${pn.cls}`}>
+                  {pn.icons.map((ic, i) => (
+                    <span key={ic.i} className="lp-ict">
+                      <IconArt icon={ic} style={ROW_STYLES[Math.floor(i / 4)]} size={30} />
+                    </span>
+                  ))}
+                </div>
+              ))}
+              <p className="lp-icl">Line, Solid and Duotone, on light and dark</p>
+            </div>
+          </div>
+        </section>
+
         <section className="lp-mani" ref={manifest}>
           <small>Why Pasteables</small>
           <p>
@@ -232,21 +275,23 @@ export default function Landing({
         <section className="lp-end">
           <div className="lp-end-in">
             <div>
-              <h2>Icon packs are on the way.</h2>
+              <h2>Stickers and icons, ready to paste.</h2>
               <button type="button" className="lnk" onClick={() => scrollToId("packs")}>Browse the sticker packs ↑</button>
+              <br />
+              <Link className="lnk" href="/icons" style={{ marginTop: 12 }}>Explore the icon library →</Link>
               <small>© Pasteables. All rights reserved.</small>
             </div>
-            <div className="lp-note" aria-hidden="true">
+            <Link className="lp-note" href="/icons" aria-label="Explore the icon library">
               <div className="lp-icons">
-                {ICON_PATHS.map((d) => (
-                  <span key={d}>
-                    <svg viewBox="0 0 24 24"><path d={d} /></svg>
+                {ICONS.icons.slice(0, 6).map((ic) => (
+                  <span key={ic.i}>
+                    <IconArt icon={ic} size={26} />
                   </span>
                 ))}
               </div>
-              <small>Icon pack preview</small>
-              <b>Everyday UI <em>Coming soon</em></b>
-            </div>
+              <small>Icon library</small>
+              <b>Essential UI <em>{ICONS.total} icons</em></b>
+            </Link>
           </div>
         </section>
       </main>

@@ -1,0 +1,123 @@
+// The 100 move designs. Like the arrows, they are not a browsable category: the library lists them only when someone searches.
+import { S, B, F, circ, rect, xf, T, roundedPoly, dash } from "./dsl.mjs";
+
+const fx = (d) => xf(d, { flipX: true });
+const up = (d) => xf(d, { rot: 3 });
+const dn = (d) => xf(d, { rot: 1 });
+const s = (d, w) => [S(d, w)];
+const dashed = (d) => S(d, 0, dash);
+const dot = (x, y, r = 1.8) => F(circ(x, y, r));
+
+const R = "M4 12h16M14 6l6 6-6 6";
+const FOUR = "M12 3v18M3 12h18M9 6l3-3 3 3M9 18l3 3 3-3M6 9l-3 3 3 3M18 9l3 3-3 3";
+const FOUR_ALT = "M12 3v6M9.5 5.5L12 3l2.5 2.5M12 15v6M9.5 18.5L12 21l2.5-2.5M3 12h6M5.5 9.5L3 12l2.5 2.5M15 12h6M18.5 9.5L21 12l-2.5 2.5";
+const CORNERS = "M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3";
+const PIN = "M12 21s-6.5-5.5-6.5-10.5a6.5 6.5 0 0 1 13 0C18.5 15.5 12 21 12 21Z";
+const HAND = "M9 11V5a1.5 1.5 0 0 1 3 0v6l2.5-.5a1.7 1.7 0 0 1 2 1.5l2.2-.2a1.7 1.7 0 0 1 1.8 1.7V16a5.5 5.5 0 0 1-5.5 5h-1.5A5.5 5.5 0 0 1 8 19L4.6 14a1.5 1.5 0 0 1 2.4-1.8L9 14Z";
+const OUT4 = "M13.5 10.5L19 5M14.5 5H19v4.5M10.5 13.5L5 19M5 14.5V19h4.5M10.5 10.5L5 5M5 9.5V5h4.5M13.5 13.5L19 19M19 14.5V19h-4.5";
+const IN4 = "M4.5 4.5l5 5M9.5 5v4.5H5M19.5 4.5l-5 5M14.5 5v4.5H19M4.5 19.5l5-5M9.5 19v-4.5H5M19.5 19.5l-5-5M14.5 19v-4.5H19";
+const TRAY = "M12 3v11M7.5 9.5L12 14l4.5-4.5M4 14v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4";
+const EXT = "M14 4h6v6M20 4l-9 9M18 14v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4";
+const squares = (r) => [rect(3.5, 3.5, 7, 7, r), rect(13.5, 3.5, 7, 7, r), rect(3.5, 13.5, 7, 7, r), rect(13.5, 13.5, 7, 7, r)].join("");
+export const MOVE_DEFS = [
+  ["Move", s(FOUR), "arrows four way pan drag all directions"],
+  ["Move (Bold)", [F(rect(10.5, 6, 3, 12, 0.5)), F(rect(6, 10.5, 12, 3, 0.5)), F(roundedPoly([[12, 2], [16.5, 7], [7.5, 7]], [0.6, 0.6, 0.6])), F(roundedPoly([[12, 22], [16.5, 17], [7.5, 17]], [0.6, 0.6, 0.6])), F(roundedPoly([[2, 12], [7, 7.5], [7, 16.5]], [0.6, 0.6, 0.6])), F(roundedPoly([[22, 12], [17, 7.5], [17, 16.5]], [0.6, 0.6, 0.6]))], "arrows four way heavy solid"],
+  ["Move (Alt)", s(FOUR_ALT), "arrows four way pan"],
+  ["Drag", s("M7.5 7.5h.01M12 7.5h.01M16.5 7.5h.01M7.5 12h.01M12 12h.01M16.5 12h.01M7.5 16.5h.01M12 16.5h.01M16.5 16.5h.01", 2.6), "grip handle dots grab"],
+  ["Drag (Vertical)", s("M12 5h.01M12 12h.01M12 19h.01", 3), "grip handle dots menu more"],
+  ["Drag (Horizontal)", s("M5 12h.01M12 12h.01M19 12h.01", 3), "grip handle dots menu more"],
+  ["Move Up", s(up(R)), "arrow north"],
+  ["Move Down", s(dn(R)), "arrow south"],
+  ["Move Left", s(fx(R)), "arrow west"],
+  ["Move Right", s(R), "arrow east"],
+  ["Reposition", [dashed(rect(3.5, 3.5, 17, 17, 2.5)), S("M16 8l-8 8M8 11.5V16h4.5")], "place frame arrow"],
+  ["Relocate", [S(PIN), S(circ(12, 10.5, 2.3))], "map pin location place"],
+  ["Transfer", s("M4 8h15M15 4l4 4-4 4M20 16H5M9 12l-4 4 4 4"), "arrow swap exchange"],
+  ["Swap", s("M17 3l3.5 3.5L17 10M3.5 11V9.5A3 3 0 0 1 6.5 6.5h14M7 21l-3.5-3.5L7 14M20.5 13v1.5a3 3 0 0 1-3 3h-14"), "arrow repeat exchange"],
+  ["Exchange", s("M3.5 8h16M16 4.5l3.5 3.5-3.5 3.5M20.5 16h-16M8 12.5L4.5 16 8 19.5"), "arrow swap trade"],
+  ["Shift", s("M4 8h7M4 16h7M4 12h13M13 6l6 6-6 6"), "arrow speed fast"],
+  ["Nudge", [dashed(rect(3.5, 5.5, 9, 13, 2)), S("M11 12h10M17 8l4 4-4 4")], "arrow small step push"],
+  ["Slide", s("M3 8.5h6M3 15.5h6M7 12h14M17 8l4 4-4 4"), "arrow glide speed"],
+  ["Push", s("M3 12h14M13 8l4 4-4 4M21 5v14"), "arrow wall end"],
+  ["Pull", s(fx("M3 12h14M13 8l4 4-4 4M21 5v14")), "arrow wall start"],
+  ["Move In", s(TRAY), "arrow download into tray drop"],
+  ["Move Out", s(EXT), "arrow external open"],
+  ["Bring Forward", [B(rect(9, 9, 11, 11, 2)), S("M15 9V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h3")], "layers order front"],
+  ["Send Backward", [B(rect(4, 4, 11, 11, 2)), S("M9 15v3a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2h-3")], "layers order back"],
+  ["Move to Top", s("M5 4h14M12 20V8M7 12.5l5-5 5 5"), "arrow up top first"],
+  ["Move to Bottom", s("M5 20h14M12 4v12M7 11.5l5 5 5-5"), "arrow down bottom last"],
+  ["Move to Start", s("M5 4v16M19 12H9M13 8l-4 4 4 4"), "arrow left beginning first"],
+  ["Move to End", s("M19 4v16M5 12h10M11 8l4 4-4 4"), "arrow right last"],
+  ["Align Move", s("M3 7h12M3 12h9M3 17h12M16 12h5M18 9l3 3-3 3"), "arrow align lines text"],
+  ["Distribute Move", s("M4 5v14M20 5v14M7.5 12h9M10.5 9l-3 3 3 3M13.5 9l3 3-3 3"), "arrow spread space between"],
+  ["Move Within", [dashed(rect(3, 3, 18, 18, 2.5)), S("M12 7.5v9M7.5 12h9M10.5 9L12 7.5 13.5 9M10.5 15l1.5 1.5 1.5-1.5M9 10.5L7.5 12 9 13.5M15 10.5l1.5 1.5-1.5 1.5")], "arrows inside frame"],
+  ["Move Outside", [dashed(rect(3.5, 9.5, 11, 11, 2)), S("M12 12l8-8M14.5 4H20v5.5")], "arrow out dashed"],
+  ["Move Into", s("M13 4h5a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-5M3 12h10M9 8l4 4-4 4"), "arrow enter door"],
+  ["Move Out Of", s("M14 4h6v6M20 4l-9 9M18 14v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4"), "arrow leave box external"],
+  ["Move Across", s("M3 12h18M7 8l-4 4 4 4M17 8l4 4-4 4"), "arrow both sides horizontal"],
+  ["Move Between", [S(rect(2, 8.5, 4, 7, 1)), S(rect(18, 8.5, 4, 7, 1)), S("M8.5 12h7M11 9.5L8.5 12l2.5 2.5M13 9.5l2.5 2.5-2.5 2.5")], "arrow boxes two"],
+  ["Move & Copy", s("M12.5 20.5H6A2.5 2.5 0 0 1 3.5 18V6A2.5 2.5 0 0 1 6 3.5h12A2.5 2.5 0 0 1 20.5 6v6.5M17.5 14.5v6M14.5 17.5h6"), "plus duplicate add"],
+  ["Move & Duplicate", s("M9 17.5H5.5A2.5 2.5 0 0 1 3 15V5.5A2.5 2.5 0 0 1 5.5 3H15a2.5 2.5 0 0 1 2.5 2.5V9M11.5 9h7a2.5 2.5 0 0 1 2.5 2.5v7a2.5 2.5 0 0 1-2.5 2.5h-7A2.5 2.5 0 0 1 9 18.5v-7A2.5 2.5 0 0 1 11.5 9Z"), "copy clone two squares"],
+  ["Move with Handle", s(HAND), "hand grab pointer"],
+  ["Move Object", s("M12 3l8 4.5v9L12 21l-8-4.5v-9ZM12 12l8-4.5M12 12L4 7.5M12 12v9"), "cube box 3d item"],
+  ["Move Layer", s("M12 3l9 5-9 5-9-5ZM3 12.5l9 5 9-5M3 16.5l9 5 9-5"), "stack layers"],
+  ["Move Item", s("M3 7h12M12 4l3 3-3 3M21 17H9M12 14l-3 3 3 3M3 12h5M16 12h5"), "list row reorder arrows"],
+  ["Move File", s("M13 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h4M13 3l5 5v2M13 3v5h5M12 16h9M18 13l3 3-3 3"), "document page arrow"],
+  ["Move Folder", s("M3 6a2 2 0 0 1 2-2h4l2 2h6a2 2 0 0 1 2 2v2M3 6v11a2 2 0 0 0 2 2h6M13 17h8M18 14l3 3-3 3"), "directory arrow"],
+  ["Move Selection", [dashed(rect(3, 3, 13, 13, 2)), S("M12 12l8 3-3.5 1.5L15 20Z")], "dashed select cursor"],
+  ["Move Range", [dashed(rect(3, 7, 18, 10, 2)), S("M7.5 12h9M10 9.5L7.5 12l2.5 2.5M14 9.5l2.5 2.5-2.5 2.5")], "dashed span arrows"],
+  ["Move Group", s(`${circ(12, 7, 3)}${circ(7, 16, 3)}${circ(17, 16, 3)}`), "circles cluster three"],
+  ["Move Node", s(`${rect(3, 3, 4, 4, 0.6)}${rect(17, 3, 4, 4, 0.6)}${rect(3, 17, 4, 4, 0.6)}${rect(17, 17, 4, 4, 0.6)}M7 5h10M7 19h10M5 7v10M19 7v10`), "corner handles frame"],
+  ["Move Anchor", [S("M5 16.5C5 8 19 8 19 16.5"), F(rect(3, 15, 3.6, 3.6, 0.5)), F(rect(17.4, 15, 3.6, 3.6, 0.5)), dot(12, 9.8, 2)], "bezier point curve vector"],
+  ["Move Point", [S(circ(9, 9, 3)), S("M13 13l7 2-3 1.5-1.5 3Z")], "cursor dot vector"],
+  ["Move Path", [S("M5 18.5C5 12 9 7.5 17 6.5"), dot(5, 18.5, 2), F(rect(17, 4.5, 4, 4, 0.6))], "curve line points"],
+  ["Move Curve", [S("M5 18C10 18 12 8 19 6"), dot(5, 18), dot(19, 6)], "curve line points"],
+  ["Move Vertex", [S("M12 5L5 18h14Z"), dot(12, 5), dot(5, 18), dot(19, 18)], "triangle corner points"],
+  ["Move Handle", [S("M5 17C5 8.5 19 8.5 19 17"), dot(5, 17, 2), dot(19, 17, 2), F(rect(10.2, 8, 3.6, 3.6, 0.5))], "curve control point"],
+  ["Move Control", [S("M12 3v5M10 5l2-2 2 2M12 16v5M10 19l2 2 2-2M3 12h5M5 10l-2 2 2 2M16 12h5M19 10l2 2-2 2"), S(circ(12, 12, 2.2))], "four way center control"],
+  ["Move Grid", s(squares(1.5)), "squares layout tiles"],
+  ["Move in Grid", [S(rect(3.5, 3.5, 7, 7, 1.5)), S(rect(13.5, 3.5, 7, 7, 1.5)), S(rect(3.5, 13.5, 7, 7, 1.5)), S("M17 14v7M13.5 17.5h7")], "squares plus add tiles"],
+  ["Move Freely", s(FOUR, 2.2), "four way free any direction"],
+  ["Move (Diagonal)", s("M5 19L19 5M12 5h7v7M5 12v7h7"), "arrows corners diagonal"],
+  ["Move (Bi-Directional)", s("M12 3v18M7 8l5-5 5 5M7 16l5 5 5-5M3 12h4M17 12h4"), "up down both ways"],
+  ["Move to Center", [S(CORNERS), F(circ(12, 12, 3))], "focus middle target"],
+  ["Move From Center", s(OUT4), "arrows outward corners"],
+  ["Move Along", [dashed("M3.5 16C7 16 8 9.5 13 9.5h3"), S("M16 9.5h5M17.5 6l3.5 3.5-3.5 3.5")], "path dashed follow"],
+  ["Move Step", s("M7 6l6 6-6 6M13 6l6 6-6 6"), "chevrons next"],
+  ["Move Continuous", s("M12 12c-2-3-3.5-4-5.5-4a4 4 0 1 0 0 8c2 0 3.5-1 5.5-4s3.5-4 5.5-4a4 4 0 1 1 0 8c-2 0-3.5-1-5.5-4Z"), "infinity endless loop"],
+  ["Move Animating", [S("M3 8h5M3 12h6M3 16h5"), S("M12 6.5v11l8-5.5Z")], "motion play speed lines"],
+  ["Auto Move", [S(circ(12, 12, 9)), S("M10 8.5v7l5.5-3.5Z")], "play automatic circle"],
+  ["Move Loop", s("M20 12a8 8 0 1 1-2.5-5.8M20 3.5V8.5h-5"), "refresh repeat clockwise"],
+  ["Move Forward", s("M5 6l6 6-6 6M12 6l6 6-6 6"), "chevrons next fast"],
+  ["Move Backward", s("M19 6l-6 6 6 6M12 6l-6 6 6 6"), "chevrons previous rewind"],
+  ["Move Upward", s("M6 19l6-6 6 6M6 12l6-6 6 6"), "chevrons up"],
+  ["Move Downward", s("M6 5l6 6 6-6M6 12l6 6 6-6"), "chevrons down"],
+  ["Move Inward", s(IN4), "arrows shrink corners"],
+  ["Move Outward", s(OUT4), "arrows grow corners"],
+  ["Move Expand", s("M14 4h6v6M20 4l-6 6M10 20H4v-6M4 20l6-6"), "arrows bigger diagonal"],
+  ["Move Compress", s("M20 4l-6 6M14 5v5h5M4 20l6-6M5 14h5v5"), "arrows smaller diagonal"],
+  ["Move Vertical", s("M12 3v18M7 8l5-5 5 5M7 16l5 5 5-5"), "arrows up down"],
+  ["Move Horizontal", s("M3 12h18M7 8l-4 4 4 4M17 8l4 4-4 4"), "arrows left right"],
+  ["Move Diagonal Up", s("M6 18L18 6M9 6h9v9"), "arrow northeast"],
+  ["Move Diagonal Down", s("M6 6l12 12M9 18h9V9"), "arrow southeast"],
+  ["Move and Align", s("M3 12h9M8.5 8.5L12 12l-3.5 3.5M15 6h6M15 12h6M15 18h6"), "arrow lines distribute"],
+  ["Move and Arrange", [S(rect(3.5, 3.5, 7, 7, 2)), S(rect(13.5, 3.5, 7, 7, 2)), S(rect(3.5, 13.5, 7, 7, 2)), S(rect(13.5, 13.5, 7, 7, 2)), dot(7, 7, 1), dot(17, 17, 1)], "squares order layout"],
+  ["Move to Position", [S("M12 16.5s-5-4-5-8a5 5 0 0 1 10 0c0 4-5 8-5 8Z"), S(circ(12, 8.5, 1.8)), S("M7.5 20.5h9")], "pin place target"],
+  ["Move with Offset", [dashed(rect(3, 3, 12, 12, 2)), S(rect(9, 9, 12, 12, 2))], "dashed copy shift"],
+  ["Move to Slot", [dashed(rect(3, 7, 9, 10, 1.5)), S("M12 12h9M17 8l4 4-4 4")], "dashed place target arrow"],
+  ["Move to Container", s(TRAY), "arrow drop into tray"],
+  ["Move Across Screens", [S(rect(3, 3, 13, 13, 2)), S(rect(8, 8, 13, 13, 2))], "devices windows two"],
+  ["Move Across Tabs", [S("M3 9a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2ZM3 9V6a1 1 0 0 1 1-1h5l1.5 2"), S("M8 13h8M13 10.5l3 2.5-3 2.5")], "browser tab arrow"],
+  ["Move Between Views", [S(rect(2, 6, 4.5, 12, 1.5)), S(rect(17.5, 6, 4.5, 12, 1.5)), S("M8.5 12h7M11 9.5L8.5 12l2.5 2.5M13 9.5l2.5 2.5-2.5 2.5")], "panes arrow two"],
+  ["Move to Another", s("M13 4h7v16h-7M3 12h10M9 8l4 4-4 4"), "arrow into box other"],
+  ["Animate Move", [S("M3 9h5M3 15h5M5 12h3"), S("M11 6.5v11l9-5.5Z")], "motion play speed lines"],
+  ["Smooth Move", s("M3 14c2-5 4-5 6 0s4 5 6 0h6M17.5 10l4 4-4 4"), "wave arrow flow"],
+  ["Snap Move", s("M6 4v8a6 6 0 0 0 12 0V4h-4v8a2 2 0 0 1-4 0V4ZM6 8h4M14 8h4"), "magnet attract grid"],
+  ["Constrained Move", [S(rect(5, 11, 14, 10, 2)), S("M8 11V8a4 4 0 0 1 8 0v3"), dot(12, 16, 1.4)], "lock limit fixed"],
+  ["Free Move", s("M3 11l18-8-8 18-2-8Z"), "navigate send plane cursor"],
+  ["Guided Move", [S("M5.5 17.5L10.5 13.5M13.5 10.5l5-4"), dot(4, 19), dot(12, 12), dot(20, 5)], "path points line"],
+  ["Drag to Move", s("M8 11V6a1.5 1.5 0 0 1 3 0v4M11 9V5a1.5 1.5 0 0 1 3 0v5M14 9.5V6.5a1.5 1.5 0 0 1 3 0V13M17 11a1.5 1.5 0 0 1 3 0v4a6 6 0 0 1-6 6h-1.5a6 6 0 0 1-5-2.7L4 13.5a1.5 1.5 0 0 1 2.3-1.8L8 13.5"), "hand grab open"],
+  ["Move via Handle", [dashed(rect(3, 3, 12, 12, 2)), S("M12 19h9M17.5 15.5L21 19l-3.5 3.5")], "dashed square arrow"],
+  ["Move with Grid Snap", [S(rect(3.5, 3.5, 7, 7, 1)), S(rect(13.5, 3.5, 7, 7, 1)), S(rect(3.5, 13.5, 7, 7, 1)), S(rect(13.5, 13.5, 7, 7, 1))], "squares tiles align"],
+  ["Relocate (Map)", [S("M6 13.5s-3-2.5-3-5.5a3 3 0 0 1 6 0c0 3-3 5.5-3 5.5Z"), S(circ(6, 8, 1)), S("M18 21.5s-3-2.5-3-5.5a3 3 0 0 1 6 0c0 3-3 5.5-3 5.5Z"), S(circ(18, 16, 1)), dashed("M9 14c3 2 4 0 6 1")], "map pins route"],
+];

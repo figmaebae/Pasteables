@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 22 200 214" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <defs>
+    <clipPath id="body"><path d="M100 64C140 62 162 94 172 132C182 168 164 214 100 214C36 214 18 168 28 132C38 94 60 62 100 64Z"/></clipPath>
+    <clipPath id="head"><path d="M100 30C128 30 138 42 138 54C138 68 124 74 100 74C76 74 62 68 62 54C62 42 72 30 100 30Z"/></clipPath>
+    <clipPath id="armL"><ellipse cx="17" cy="148" rx="14" ry="25" transform="rotate(8 17 148)"/></clipPath>
+    <clipPath id="armR"><ellipse cx="183" cy="148" rx="14" ry="25" transform="rotate(-8 183 148)"/></clipPath>
+    <clipPath id="footL"><ellipse cx="80" cy="220" rx="15" ry="8.5"/></clipPath>
+    <clipPath id="footR"><ellipse cx="120" cy="220" rx="15" ry="8.5"/></clipPath>
+  </defs>
+  <!-- tiny feet: soft, with a faint underside shade -->
+  <g fill="#FDFDFF"><ellipse cx="80" cy="220" rx="15" ry="8.5"/><ellipse cx="120" cy="220" rx="15" ry="8.5"/></g>
+  <g clip-path="url(#footL)"><ellipse cx="80" cy="220" rx="15" ry="8.5" stroke="#CBD5EA" stroke-width="8" opacity=".45"/></g><g clip-path="url(#footR)"><ellipse cx="120" cy="220" rx="15" ry="8.5" stroke="#CBD5EA" stroke-width="8" opacity=".45"/></g>
+  <g stroke="#4B2745" stroke-width="3.4"><ellipse cx="80" cy="220" rx="15" ry="8.5"/><ellipse cx="120" cy="220" rx="15" ry="8.5"/></g>
+  <!-- rounded arms: even thickness, inner-edge shade -->
+  <ellipse cx="17" cy="148" rx="14" ry="25" transform="rotate(8 17 148)" fill="#FDFDFF"/><g clip-path="url(#armL)"><ellipse cx="17" cy="148" rx="14" ry="25" transform="rotate(8 17 148)" stroke="#CBD5EA" stroke-width="8" opacity=".42"/><path d="M7 128Q5 142 10 156" stroke="#fff" stroke-width="4" opacity=".9"/></g><ellipse cx="17" cy="148" rx="14" ry="25" transform="rotate(8 17 148)" stroke="#4B2745" stroke-width="3.4"/>
+  <ellipse cx="183" cy="148" rx="14" ry="25" transform="rotate(-8 183 148)" fill="#FDFDFF"/><g clip-path="url(#armR)"><ellipse cx="183" cy="148" rx="14" ry="25" transform="rotate(-8 183 148)" stroke="#CBD5EA" stroke-width="8" opacity=".42"/><path d="M173 128Q171 142 176 156" stroke="#fff" stroke-width="4" opacity=".9"/></g><ellipse cx="183" cy="148" rx="14" ry="25" transform="rotate(-8 183 148)" stroke="#4B2745" stroke-width="3.4"/>
+  <!-- plush body: soft inner-edge shade all round, deeper underneath, faint highlight -->
+  <path d="M100 64C140 62 162 94 172 132C182 168 164 214 100 214C36 214 18 168 28 132C38 94 60 62 100 64Z" fill="#FDFDFF"/>
+  <g clip-path="url(#body)">
+    <path d="M100 64C140 62 162 94 172 132C182 168 164 214 100 214C36 214 18 168 28 132C38 94 60 62 100 64Z" stroke="#D5DEEF" stroke-width="16" opacity=".32"/>
+    <path d="M14 164Q100 244 186 158V240H14Z" fill="#CBD5EA" opacity=".5"/>
+    <ellipse cx="100" cy="77" rx="44" ry="11" fill="#CBD5EA" opacity=".4"/>
+    <path d="M40 150Q34 104 62 80" stroke="#fff" stroke-width="8" opacity=".95"/>
+  </g>
+  <path d="M100 64C140 62 162 94 172 132C182 168 164 214 100 214C36 214 18 168 28 132C38 94 60 62 100 64Z" stroke="#4B2745" stroke-width="3.4"/>
+  <!-- head: same shape, same soft finish so it blends with the body -->
+  <path d="M100 30C128 30 138 42 138 54C138 68 124 74 100 74C76 74 62 68 62 54C62 42 72 30 100 30Z" fill="#FDFDFF"/>
+  <g clip-path="url(#head)">
+    <path d="M100 30C128 30 138 42 138 54C138 68 124 74 100 74C76 74 62 68 62 54C62 42 72 30 100 30Z" stroke="#D5DEEF" stroke-width="11" opacity=".3"/>
+    <path d="M52 62Q100 90 148 58V84H52Z" fill="#CBD5EA" opacity=".42"/>
+    <path d="M69 52Q71 41 82 37" stroke="#fff" stroke-width="5" opacity=".95"/>
+  </g>
+  <path d="M100 30C128 30 138 42 138 54C138 68 124 74 100 74C76 74 62 68 62 54C62 42 72 30 100 30Z" stroke="#4B2745" stroke-width="3.4"/>
+  <!-- face: unchanged -->
+  <path d="M90 52H110" stroke="#2B1226" stroke-width="1.8"/>
+  <circle cx="86" cy="52" r="3.8" fill="#2B1226"/><circle cx="114" cy="52" r="3.8" fill="#2B1226"/>
+</svg>

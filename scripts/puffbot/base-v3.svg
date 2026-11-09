@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <defs>
+    <clipPath id="body"><path d="M100 64C150 62 176 92 176 128C176 160 150 180 100 180C50 180 24 160 24 128C24 92 50 62 100 64Z"/></clipPath>
+    <clipPath id="head"><path d="M100 30C128 30 138 42 138 54C138 68 124 74 100 74C76 74 62 68 62 54C62 42 72 30 100 30Z"/></clipPath>
+    <clipPath id="armL"><ellipse cx="22" cy="130" rx="14" ry="24" transform="rotate(8 22 130)"/></clipPath>
+    <clipPath id="armR"><ellipse cx="178" cy="130" rx="14" ry="24" transform="rotate(-8 178 130)"/></clipPath>
+  </defs>
+  <!-- tiny feet -->
+  <g fill="#FDFDFF" stroke="#4B2745" stroke-width="3.4"><ellipse cx="80" cy="184" rx="15" ry="8.5"/><ellipse cx="120" cy="184" rx="15" ry="8.5"/></g>
+  <!-- small rounded arms (behind the body) -->
+  <ellipse cx="22" cy="130" rx="14" ry="24" transform="rotate(8 22 130)" fill="#FDFDFF"/><g clip-path="url(#armL)"><path d="M4 140Q22 170 44 134V170H4Z" fill="#E1E8F5"/></g><ellipse cx="22" cy="130" rx="14" ry="24" transform="rotate(8 22 130)" stroke="#4B2745" stroke-width="3.4"/>
+  <ellipse cx="178" cy="130" rx="14" ry="24" transform="rotate(-8 178 130)" fill="#FDFDFF"/><g clip-path="url(#armR)"><path d="M196 140Q178 170 156 134V170H196Z" fill="#E1E8F5"/></g><ellipse cx="178" cy="130" rx="14" ry="24" transform="rotate(-8 178 130)" stroke="#4B2745" stroke-width="3.4"/>
+  <!-- large soft inflated body -->
+  <path d="M100 64C150 62 176 92 176 128C176 160 150 180 100 180C50 180 24 160 24 128C24 92 50 62 100 64Z" fill="#FDFDFF"/>
+  <g clip-path="url(#body)"><path d="M16 138Q100 214 184 134V200H16Z" fill="#E1E8F5"/><path d="M16 160Q100 222 184 156V210H16Z" fill="#D2DBEE" opacity=".6"/><path d="M42 118Q40 92 62 78" stroke="#fff" stroke-width="8" opacity=".95"/></g>
+  <path d="M100 64C150 62 176 92 176 128C176 160 150 180 100 180C50 180 24 160 24 128C24 92 50 62 100 64Z" stroke="#4B2745" stroke-width="3.4"/>
+  <!-- antenna -->
+  <path d="M100 30V22" stroke="#4B2745" stroke-width="3.4"/><circle cx="100" cy="17" r="5.5" fill="#A8E6CF" stroke="#4B2745" stroke-width="3.4"/>
+  <!-- small head, sitting on the body -->
+  <path d="M100 30C128 30 138 42 138 54C138 68 124 74 100 74C76 74 62 68 62 54C62 42 72 30 100 30Z" fill="#FDFDFF"/>
+  <g clip-path="url(#head)"><path d="M56 62Q100 84 144 58V80H56Z" fill="#E1E8F5"/><path d="M70 50Q72 40 82 36" stroke="#fff" stroke-width="5" opacity=".95"/></g>
+  <path d="M100 30C128 30 138 42 138 54C138 68 124 74 100 74C76 74 62 68 62 54C62 42 72 30 100 30Z" stroke="#4B2745" stroke-width="3.4"/>
+  <!-- face: two tiny dot eyes joined by one thin straight line, nothing else -->
+  <path d="M90 52H110" stroke="#2B1226" stroke-width="1.8"/>
+  <circle cx="86" cy="52" r="3.8" fill="#2B1226"/><circle cx="114" cy="52" r="3.8" fill="#2B1226"/>
+</svg>

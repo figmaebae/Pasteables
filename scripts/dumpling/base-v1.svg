@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="70 95 890 890" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <defs>
+    <clipPath id="body"><path d="M515 190C560 190 600 225 650 268C745 345 800 465 800 605C800 765 700 852 515 852C330 852 230 765 230 605C230 465 285 345 380 268C430 225 470 190 515 190Z"/></clipPath>
+  </defs>
+  <!-- tiny feet -->
+  <g fill="#EDD6A8" stroke="#20040F" stroke-width="12"><path d="M385 830C378 868 392 888 420 888C448 888 458 868 452 830Z"/><path d="M615 830C622 868 608 888 580 888C552 888 542 868 548 830Z"/></g>
+  <!-- plump dumpling body -->
+  <path d="M515 190C560 190 600 225 650 268C745 345 800 465 800 605C800 765 700 852 515 852C330 852 230 765 230 605C230 465 285 345 380 268C430 225 470 190 515 190Z" fill="#F6E4C2"/>
+  <g clip-path="url(#body)">
+    <!-- golden shading round the lower edge -->
+    <path d="M220 690Q515 900 810 680V900H220Z" fill="#E6C48E" opacity=".7"/>
+    <path d="M232 560Q250 740 360 810" stroke="#E9CD9B" stroke-width="30" opacity=".55"/>
+    <path d="M798 560Q780 740 670 810" stroke="#E2BD84" stroke-width="30" opacity=".6"/>
+    <!-- soft pleats gathering at the top -->
+    <g stroke="#CC9A5C" stroke-width="10" opacity=".9">
+      <path d="M515 205C440 235 372 290 352 372"/>
+      <path d="M515 205C470 255 432 315 424 392"/>
+      <path d="M515 205C505 268 500 330 502 400"/>
+      <path d="M515 205C560 255 598 315 606 392"/>
+      <path d="M515 205C590 235 658 290 678 372"/>
+    </g>
+    <!-- gentle highlights -->
+    <path d="M300 520Q298 430 350 370" stroke="#fff" stroke-width="16" opacity=".85"/>
+    <circle cx="316" cy="568" r="8" fill="#fff" opacity=".9"/>
+  </g>
+  <path d="M515 190C560 190 600 225 650 268C745 345 800 465 800 605C800 765 700 852 515 852C330 852 230 765 230 605C230 465 285 345 380 268C430 225 470 190 515 190Z" stroke="#20040F" stroke-width="12"/>
+  <!-- mitten hands on the outer sides, same shape as the other PASTEABLES characters -->
+  <g fill="#EDD6A8" stroke="#20040F" stroke-width="12">
+    <path d="M222 735C205 750 205 790 235 805C265 818 305 805 318 780C325 762 300 748 280 752C262 755 250 745 245 730C240 718 228 722 222 735Z" transform="translate(24 -12)"/>
+    <path d="M222 735C205 750 205 790 235 805C265 818 305 805 318 780C325 762 300 748 280 752C262 755 250 745 245 730C240 718 228 722 222 735Z" transform="translate(1006 -12) scale(-1 1)"/>
+  </g>
+  <!-- face -->
+  <ellipse cx="348" cy="640" rx="34" ry="19" fill="#EE8383"/><ellipse cx="682" cy="640" rx="34" ry="19" fill="#EE8383"/>
+  <ellipse cx="425" cy="585" rx="42" ry="64" fill="#1E0612"/><ellipse cx="605" cy="585" rx="42" ry="64" fill="#1E0612"/>
+  <circle cx="429" cy="562" r="13" fill="#fff"/><circle cx="598" cy="559" r="13" fill="#fff"/>
+  <circle cx="417" cy="608" r="5.5" fill="#fff" opacity=".9"/><circle cx="592" cy="605" r="5.5" fill="#fff" opacity=".9"/>
+  <path d="M470 632Q515 672 560 632" stroke="#1E0612" stroke-width="9"/>
+</svg>
