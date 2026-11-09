@@ -14,6 +14,8 @@ export interface Tile {
   svg: string;
   /** Hand-built outlined version, when one exists. */
   alt?: string;
+  /** Left out by the server because this visitor has no access to it. */
+  locked?: boolean;
 }
 
 export interface Section {

@@ -1,6 +1,8 @@
 "use client";
 
+import { useAccess } from "./AccessProvider";
 import { useAuth } from "./AuthProvider";
+import { FREE_STICKERS } from "@/lib/access-config";
 import { memo, useEffect, useId, useRef, useState } from "react";
 import { DEFAULT_INK, FORMAT_LABEL, formatOutput, transformSvg } from "@/lib/transform";
 import type { Format } from "@/lib/transform";
@@ -125,6 +127,7 @@ const SectionView = memo(function SectionView({
   const outlined = st.style === "outlined";
   const [copiedIdx, setCopiedIdx] = useState<number | null>(null);
   const { user, loading, requestSignIn } = useAuth();
+  const { openUpgrade } = useAccess();
 
   const render = (t: Tile, i: number) => {
     const hex =
@@ -146,6 +149,11 @@ const SectionView = memo(function SectionView({
   };
 
   const onClick = async (t: Tile, i: number) => {
+    // Stickers outside the free set only arrive from the server for people with access.
+    if (t.locked) {
+      openUpgrade("pack");
+      return;
+    }
     // Browsing is open to everyone; copying needs a signed-in account.
     if (loading) return;
     if (!user) {
@@ -165,17 +173,31 @@ const SectionView = memo(function SectionView({
           <button
             key={t.name + i}
             type="button"
-            className="gtile"
+            className={`gtile${t.locked ? " locked" : ""}`}
             data-state={copiedIdx === i ? "copied" : undefined}
-            aria-label={`Copy ${t.name} as ${FORMAT_LABEL[st.format]}`}
+            aria-label={t.locked ? `${t.name} is part of the full collection` : `Copy ${t.name} as ${FORMAT_LABEL[st.format]}`}
             onClick={() => onClick(t, i)}
           >
-            <div className="gstage" dangerouslySetInnerHTML={{ __html: render(t, i) }} />
+            {t.locked ? (
+              <div className="gstage glock" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="5" y="10.5" width="14" height="9.5" rx="2.5" />
+                  <path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5" />
+                </svg>
+              </div>
+            ) : (
+              <div className="gstage" dangerouslySetInnerHTML={{ __html: render(t, i) }} />
+            )}
             <div className="gcap">
               <span>{t.name}</span>
             </div>
             <span className="gover" aria-hidden="true">
-              {copiedIdx === i ? (
+              {t.locked ? (
+                <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="5" y="10.5" width="14" height="9.5" rx="2.5" />
+                  <path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5" />
+                </svg>
+              ) : copiedIdx === i ? (
                 <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M5 12.5l4.5 4.5L19 7.5" />
                 </svg>
@@ -185,7 +207,7 @@ const SectionView = memo(function SectionView({
                   <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5" />
                 </svg>
               )}
-              <span>{copiedIdx === i ? "Copied" : "Copy"}</span>
+              <span>{t.locked ? "Unlock" : copiedIdx === i ? "Copied" : "Copy"}</span>
             </span>
           </button>
         ))}
@@ -211,6 +233,7 @@ export default function GalleryView({
   const titleRef = useRef<HTMLHeadingElement>(null);
   const strokeId = useId();
   const eyesId = useId();
+  const { openUpgrade } = useAccess();
   const patch = (p: Partial<Studio>) => setSt((s) => ({ ...s, ...p }));
 
   useEffect(() => {
@@ -237,6 +260,13 @@ export default function GalleryView({
             {gallery.title}
           </h2>
           <p>{gallery.subtitle}</p>
+          {gallery.sections.some((s) => s.tiles.some((t) => t.locked)) && (
+            <button type="button" className="pay-note" onClick={() => openUpgrade("menu")}>
+              {gallery.sections.every((s) => s.tiles.every((t) => t.locked))
+                ? "This pack is part of the full collection. Unlock everything"
+                : `The first ${FREE_STICKERS} stickers are free. Unlock the rest`}
+            </button>
+          )}
         </div>
 
         <div className="studio">

@@ -1,0 +1,31 @@
+/* Access and payment: the unlock buttons, locked stickers and the upgrade dialog. */
+.lp-right{display:flex;align-items:center;gap:14px}
+.lp-unlock,.ic-unlock{border:1.5px solid #E8683A;background:#fff;color:#C4501F;font:700 .88rem var(--f-dm),system-ui,sans-serif;border-radius:999px;padding:8px 16px;cursor:pointer;white-space:nowrap;transition:background .15s,transform .15s}
+.lp-unlock:hover,.ic-unlock:hover{background:#FFF1E9;transform:translateY(-1px)}
+.lp-unlock.pro,.ic-unlock.pro{border-color:#CFE7D5;color:#2E6B3F;background:#F2FAF4}
+.lp-unlock:focus-visible,.ic-unlock:focus-visible{outline:3px solid #E8683A;outline-offset:2px}
+.ic-unlock{margin-left:auto}
+@media(max-width:560px){.lp-right{gap:8px}.lp-unlock,.ic-unlock{padding:7px 12px;font-size:.82rem}}
+
+.gtile.locked .glock{display:grid;place-items:center;color:#9C94A3;background:#F7F2EA;border-radius:18px;min-height:96px}
+.gtile.locked .gcap span{color:#8B8394}
+.pay-note{margin-top:10px;border:0;background:#FFF1E9;color:#B8431A;font:600 .92rem var(--f-dm),system-ui,sans-serif;padding:9px 16px;border-radius:999px;cursor:pointer;align-self:flex-start;text-align:left}
+.pay-note:hover{background:#FFE5D6}
+.pay-note:focus-visible{outline:3px solid #E8683A;outline-offset:2px}
+
+.up-dlg{text-align:left}
+.up-dlg h2{padding-right:34px}
+.up-list{list-style:none;margin:14px 0 8px;padding:0;display:grid;gap:8px;font-size:.98rem;line-height:1.4}
+.up-list li{padding-left:26px;position:relative}
+.up-list li::before{content:"";position:absolute;left:2px;top:.3em;width:14px;height:8px;border-left:2.5px solid #E8683A;border-bottom:2.5px solid #E8683A;transform:rotate(-45deg)}
+.up-free{margin:6px 0 14px;font-size:.88rem;color:#6F6878}
+.up-price{margin:0 0 14px;font-size:1.05rem}
+.up-price strong{font:800 1.9rem var(--f-brico),sans-serif;letter-spacing:-.03em}
+.up-price small{display:block;color:#6F6878;font-size:.85rem;margin-top:2px}
+.up-buy{background:#2B2430;color:#fff;border-color:#2B2430;margin-bottom:0}
+.up-buy:hover:not(:disabled){box-shadow:0 10px 24px rgba(43,36,48,.28)}
+.up-key{display:grid;gap:8px;margin-top:16px;padding:14px;border-radius:16px;background:#F7F2EA}
+.up-key span{font-size:.8rem;color:#6F6878;font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+.up-key code{font:600 1.05rem ui-monospace,SFMono-Regular,Menlo,monospace;word-break:break-all}
+.up-key button{justify-self:start;border:0;border-radius:999px;background:#2B2430;color:#fff;font:700 .85rem var(--f-dm),sans-serif;padding:8px 16px;cursor:pointer}
+.up-key small{color:#6F6878;font-size:.82rem}

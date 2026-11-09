@@ -3,8 +3,10 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import GalleryView from "./GalleryView";
 import Landing from "./Landing";
-import { GALLERY_LOADERS } from "@/lib/galleries";
+import { useAccess } from "./AccessProvider";
 import type { Gallery, HeroColumn } from "@/lib/types";
+
+const PACK_IDS = ["mascot", "emoticons", "ghost", "mushroom", "dumpling", "clouds"];
 
 function setHash(h: string) {
   try {
@@ -13,6 +15,8 @@ function setHash(h: string) {
 }
 
 export default function Shelf({ hero }: { hero: HeroColumn[] }) {
+  const { loadGallery, key: accessKey } = useAccess();
+  const loadedIds = useRef<string[]>([]);
   const [active, setActive] = useState<string | null>(null);
   const [loaded, setLoaded] = useState<Record<string, Gallery>>({});
   const [toast, setToast] = useState<{ text: string; show: boolean }>({ text: "", show: false });
@@ -29,9 +33,9 @@ export default function Shelf({ hero }: { hero: HeroColumn[] }) {
   }, []);
 
   const open = useCallback((id: string, move: boolean, push = false) => {
-    if (!GALLERY_LOADERS[id]) return;
+    if (!PACK_IDS.includes(id)) return;
     moveFocus.current = move;
-    GALLERY_LOADERS[id]().then((g) => {
+    loadGallery(id).then((g) => {
       setLoaded((prev) => (prev[id] ? prev : { ...prev, [id]: g }));
       setActive(id);
       if (push && location.hash !== "#" + id) {
@@ -46,7 +50,18 @@ export default function Shelf({ hero }: { hero: HeroColumn[] }) {
         setHash("#" + id);
       }
     });
-  }, []);
+  }, [loadGallery]);
+
+  // Signing in, signing out or buying changes what each pack contains, so fetch the packs already opened again.
+  useEffect(() => {
+    loadedIds.current.forEach((id) => {
+      loadGallery(id).then((g) => setLoaded((prev) => (prev[id] ? { ...prev, [id]: g } : prev)));
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [accessKey]);
+  useEffect(() => {
+    loadedIds.current = Object.keys(loaded);
+  }, [loaded]);
 
   const close = useCallback(() => {
     setActive(null);
@@ -91,7 +106,9 @@ export default function Shelf({ hero }: { hero: HeroColumn[] }) {
   }, [active]);
 
   // Warm the chunk on hover so the click feels instant.
-  const prefetch = (id: string) => void GALLERY_LOADERS[id]?.();
+  const prefetch = (id: string) => {
+    if (PACK_IDS.includes(id)) void loadGallery(id).catch(() => {});
+  };
 
   const onPackClick = (id: string, e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();

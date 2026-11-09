@@ -1,9 +1,11 @@
 import type { Metadata, Viewport } from "next";
 import { Bricolage_Grotesque, DM_Sans, Figtree, Montserrat } from "next/font/google";
 import Analytics from "@/components/Analytics";
+import AccessProvider from "@/components/AccessProvider";
 import AuthProvider from "@/components/AuthProvider";
 import "./globals.css";
 import "./landing.css";
+import "./pay.css";
 
 const mont = Montserrat({ subsets: ["latin"], weight: "800", variable: "--f-mont", display: "swap" });
 const brico = Bricolage_Grotesque({ subsets: ["latin"], weight: ["700", "800"], variable: "--f-brico", display: "swap" });
@@ -42,7 +44,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${mont.variable} ${brico.variable} ${dm.variable} ${fig.variable}`}>
       <body>
-        <AuthProvider>{children}</AuthProvider>
+        <AuthProvider>
+          <AccessProvider>{children}</AccessProvider>
+        </AuthProvider>
         <Analytics />
       </body>
     </html>
